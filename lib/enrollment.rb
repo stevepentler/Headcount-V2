@@ -9,11 +9,9 @@ class Enrollment
   end
 
   def kindergarten_participation_by_year
-    participation_years
   end 
 
   def kindergarten_participation_in_year(year)
-    participation_years[year]
   end
 
   def graduation_rate_by_year
