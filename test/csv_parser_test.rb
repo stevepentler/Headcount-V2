@@ -9,9 +9,7 @@ class CSVParserTest < Minitest::Test
   def load_data
     ld = {
           :enrollment => {
-            :high_school_graduation => "./data/High school graduation rates.csv",
-              :kindergarten => "./data/Kindergartners in full-day program.csv"
-              
+              :kindergarten => "./data/kindergartners_test_file.csv"              
               }
           }
   end

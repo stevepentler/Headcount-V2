@@ -1,27 +1,37 @@
 require 'csv'
+require_relative 'district'
 require_relative 'csv_parser'
 
 class DistrictRepository
+
+  attr_reader :districts, :parsed_csv
   
   def initialize
     @districts = []
+    @parsed_csv = nil
   end
 
   def load_csv(csv_paths)
-    csv_parser = CSVParser.new(csv_paths)
+    csv_parser = CSVParser.new(csv_paths) 
     @parsed_csv = csv_parser.parsed_csv
+    @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)}
   end
 
-  def unique_district?(parsed_csv)
+  def unique_district?(parse)
+    empty?(parse)
     @districts.each do |district|
-      if district[:name] != district_data[:location].upcase
-        inistantiate_districts(parsed_csv)
-      end
+      instantiate_districts(parse) if district.name != parse[:location]
     end
   end
 
-  def instantiate_districts(parsed_csv)
-    @districts << District.new(parsed_csv)
+  def empty?(parse)
+    if @districts.empty?
+      @districts << District.new(parse)
+    end
+  end
+
+  def instantiate_districts(parse)
+    @districts << District.new(parse)
   end 
 
   def find_by_name(name)
