@@ -24,10 +24,8 @@ class DistrictRepository
     end
   end
 
-  def empty?(parse)
-    if @districts.empty?
-      @districts << District.new(parse)
-    end
+  def empty?(parse)   
+    @districts << District.new(parse) if @districts.empty?
   end
 
   def instantiate_districts(parse)
