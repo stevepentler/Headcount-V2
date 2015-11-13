@@ -15,6 +15,8 @@ class DistrictRepository
     csv_parser = CSVParser.new(csv_paths) 
     @parsed_csv = csv_parser.parsed_csv
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)}
+    e = EnrollmentRepository.new
+    e.unique_enrollment?(@parsed_csv)
   end
 
   def unique_district?(parse)
@@ -25,7 +27,7 @@ class DistrictRepository
   end
 
   def empty?(parse)   
-    @districts << District.new(parse) if @districts.empty?
+    instantiate_districts(parse) if @districts.empty?
   end
 
   def instantiate_districts(parse)

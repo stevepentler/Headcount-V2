@@ -21,4 +21,5 @@ class CSVParserTest < Minitest::Test
     assert output[:enrollment][:kindergarten].count > 5
     assert output[:enrollment][:high_school_graduation].count > 5
   end
+
 end

@@ -1,11 +1,11 @@
 
 class Enrollment
 
-  attr_reader :name, :participation_years
+  attr_reader :name, :yearly_data
 
   def initialize(enrollment_data)
     @name = enrollment_data[:name]
-    @participation_years = enrollment_data[:participation]
+    @participation_years = enrollment_data[:yearly_data]
   end
 
   def kindergarten_participation_by_year
