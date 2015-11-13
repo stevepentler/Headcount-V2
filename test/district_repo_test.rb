@@ -6,10 +6,9 @@ require './lib/district_repo'
 class DistrictRepoTest < Minitest::Test
 
   def load_data
-    ld = {
-          :enrollment => {
-            :high_school_graduation => "./data/High school graduation rates.csv",
-            :kindergarten => "./data/kindergartners_test_file.csv"   
+    ld = {:enrollment => {
+              :kindergarten => "./data/kindergartners_test_file.csv",
+              :high_school_graduation => "./data/hs_grad_test_file.csv" 
               }
           }
   end

@@ -9,12 +9,13 @@ class CSVParserTest < Minitest::Test
   def load_data
     ld = {
           :enrollment => {
-              :kindergarten => "./data/kindergartners_test_file.csv"              
+              :kindergarten => "./data/kindergartners_test_file.csv",
+              :high_school_graduation => "./data/hs_grad_test_file.csv" 
               }
           }
   end
 
-  def test_pull_apart_data_sub_category_data
+  def test_seperate_category_has_rows
     p = CSVParser.new(load_data)
     p.seperate_category
     output = p.parsed_csv
