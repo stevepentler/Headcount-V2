@@ -27,8 +27,8 @@ class KindergartenAnalysis
       if district2.kindergarten_data.include?(year)
         division = district1.kindergarten_data[year] / district2.kindergarten_data[year]
         yearly_comparison[year] = division.round(3)
-      else
-        return "These data sets do not have years that overlap and cannot be compared"
+       else 
+        yearly_comparison[year] = nil
       end 
     end 
     yearly_comparison
