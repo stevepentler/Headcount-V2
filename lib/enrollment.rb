@@ -6,7 +6,7 @@ class Enrollment
   def initialize(enrollment_data)
     @name = enrollment_data[:name]
     @kindergarten_data = enrollment_data[:kindergarten]
-    @graduation_data = {}
+    @graduation_data = {} #only passing in final year of graduation rate, merge is messed up
   end
 
   def merge_enroll_data(enroll_data)

@@ -10,14 +10,15 @@ class HeadcountAnalystTest < Minitest::Test
     dr = DistrictRepository.new
     dr.load_csv({
      :enrollment => {
-     :kindergarten => "./data/kindergartners_test_file.csv"}})
+     :kindergarten => "./data/kindergartners_test_file.csv",
+     :high_school_graduation => './data/hs_grad_test_file.csv'}})
     dr
   end 
 
-  def test_district_averages
+  def test_district_kg_average
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 0.3, ha.district_average("ADAMS COUNTY 14")
+    assert_equal 0.3, ha.district_kindergarten_average("ADAMS COUNTY 14")
   end 
 
   def test_kindergarden_participation_rate
