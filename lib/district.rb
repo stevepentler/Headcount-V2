@@ -1,4 +1,3 @@
-require_relative "district_repo"
 
 class District 
   attr_reader :name

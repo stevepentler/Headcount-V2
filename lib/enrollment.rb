@@ -5,7 +5,8 @@ class Enrollment
 
   def initialize(enrollment_data)
     @name = enrollment_data[:name]
-    @participation_years = enrollment_data[:yearly_data]
+    @participation_years = enrollment_data[:kindergarten][:yearly_data]
+    binding.pry
   end
 
   def kindergarten_participation_by_year
