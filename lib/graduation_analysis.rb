@@ -27,11 +27,11 @@ class GraduationAnalysis
       if district2.graduation_data.include?(year)
         division = district1.graduation_data[year] / district2.graduation_data[year]
         yearly_comparison[year] = division.round(3)
-      else
-        return "These data sets do not have years that overlap and cannot be compared"
+      else 
+        yearly_comparison[year] = "No Comparison"
       end 
     end 
-    yearly_comparison
+    yearly_comparison 
   end 
 end 
 
