@@ -66,17 +66,22 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 1 , ha.kindergarten_participation_against_high_school_graduation("COLORADO")
   end 
 
-  def test_kg_hs_correlation_returns_boolean
-
+  def test_kg_hs_comparison_for_mismatched_years
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal 0.635, ha.kindergarten_participation_against_high_school_graduation("ADAMS COUNTY 14")
   end 
 
-  def test_kg_hs_correlation_returns_true_for_range
-  end
-
-  def test_kg_hs_correlation_returns_false_outside_range
+  def test_kg_hs_correlation_returns_true_for_district_in_range
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal true, ha.kindergarten_participation_correlates_with_high_school_graduation("ADAMS COUNTY 14")
   end 
 
-  def testtest_kg_hs_correlation_statewide_returns_boolean
+  def test_kg_hs_correlation_returns_false_for_district_outside_range
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal false, ha.kindergarten_participation_correlates_with_high_school_graduation("JOHNSTOWN-MILLIKEN RE-5J")
   end 
 
   def test_kg_hs_correlation_statewide_true_for_seventy_percent_plus

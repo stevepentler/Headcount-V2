@@ -32,7 +32,17 @@ class HeadcountAnalyst
     comparison
   end 
 
+  def kindergarten_participation_correlates_with_high_school_graduation(district)
+    correlation = kindergarten_participation_against_high_school_graduation(district)
+    if (correlation  > 0.6 && correlation < 1.5)
+      true
+    else 
+      false
+    end 
+  end 
 
+  def kindergarten_participation_correlates_with_high_school_graduation(district)
+  end 
 
 
 
@@ -40,17 +50,6 @@ class HeadcountAnalyst
 
 end 
 
-  # def kindergarten_participation_against_high_school_graduation(district)
-  #   kindergarten_variation = kindergarten_participation_rate_variation_trend(district1, "Colorado")
-  #   graduation_variation = graduation_participation_rate_variation_trend(district1, "Colorado")
-  #   comparison = (kindergarten_variation / graduation_variation)
-  # end 
-
-
-  # def kindergarten_participation_correlates_with_high_school_graduation(district)
-  #   # comparison = kindergarten_participation_against_high_school_graduation(district)
-  #   # true if comparison > 0.6 && < 1.5
-  # end 
 
   # def kindergarten_participation_correlates_with_high_school_graduation(statewide)
   #   # #iterate through each district
