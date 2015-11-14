@@ -18,6 +18,7 @@ class EnrollmentRepositoryTest < Minitest::Test
   def test_repo_stores_object_name
     er = EnrollmentRepository.new
     er.load_data(input)
+    binding.pry
     assert_equal "ACADEMY 20", er.enrollments[0].name
   end
 

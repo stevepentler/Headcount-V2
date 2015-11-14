@@ -1,11 +1,20 @@
 
 class Enrollment
 
-  attr_reader :name, :yearly_data, :participation_years
+  attr_reader :name, :yearly_data
 
   def initialize(enrollment_data)
     @name = enrollment_data[:name]
-    @participation_years = enrollment_data
+    @kindergarten_data = enrollment_data[:kindergarten]
+    @graduation_data = {}
+  end
+
+  def merge_enroll_data(enroll_data)
+    if enroll_data.has_key?(:kindergarten)
+      @kindergarten_data.merge!(enroll_data[:kindergarten])
+    elsif enroll_data.has_key?(:high_school_graduation)
+      @graduation_data.merge!(enroll_data)
+    end
   end
 
   def kindergarten_participation_by_year

@@ -31,7 +31,7 @@ class EnrollmentRepository
     if enrollment == nil
       @enrollments << @enrollment_formatter.district_yearly_data(category, row)
     else
-      @enrollment_formatter.append_district_yearly_data(enrollment, row)
+      @enrollment_formatter.append_district_yearly_data(enrollment, category, row)
     end
   end
 
@@ -41,7 +41,7 @@ class EnrollmentRepository
 
   def find_by_name(name)
     @enrollments.find do |enrollment|
-      name == enrollment.name
+      name.upcase == enrollment.name.upcase
     end
   end 
 
