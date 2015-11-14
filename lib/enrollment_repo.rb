@@ -1,13 +1,14 @@
 require 'enrollment_formatter'
 require 'pry'
+
 class EnrollmentRepository
 
   attr_reader :enrollments
-  
+
   def initialize
     @enrollments = []
     @enrollment_formatter = EnrollmentFormatter.new
-  end 
+  end
 
   def load_data(parsed_csv)
     enrollments_csv = parsed_csv[:enrollment]
@@ -35,7 +36,7 @@ class EnrollmentRepository
     end
   end
 
-  def empty?(category, row)   
+  def empty?(category, row)
      @enrollments << @enrollment_formatter.district_yearly_data(category, row)
   end
 
@@ -43,7 +44,7 @@ class EnrollmentRepository
     @enrollments.find do |enrollment|
       name.upcase == enrollment.name.upcase
     end
-  end 
+  end
 
   def find_by_matching
     find_all = @enrollments.select do |enrollment|
@@ -51,4 +52,4 @@ class EnrollmentRepository
     end
     find_all
   end
-end 
+end
