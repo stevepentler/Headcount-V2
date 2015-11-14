@@ -7,12 +7,11 @@ class EnrollmentFormatter
   end
 
   def district_yearly_data(category, row)
-    binding.pry
     Enrollment.new({:name => row[:location], category => {:yearly_data => yearly_data(row)}})
   end
 
   def append_district_yearly_data(enrollment, row)
-    enrollment.participation_years.merge!({category => pair_year_percentage(row)})
+    enrollment.participation_years.merge!(yearly_data(row))
   end
 
 end 

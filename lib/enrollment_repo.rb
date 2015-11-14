@@ -1,6 +1,8 @@
 require 'enrollment_formatter'
 require 'pry'
 class EnrollmentRepository
+
+  attr_reader :enrollments
   
   def initialize
     @enrollments = []
@@ -8,7 +10,6 @@ class EnrollmentRepository
   end 
 
   def load_data(parsed_csv)
-    binding.pry
     enrollments_csv = parsed_csv[:enrollment]
     district_governor(enrollments_csv)
   end
@@ -16,17 +17,21 @@ class EnrollmentRepository
   def district_governor(enrollments_csv)
     enrollments_csv.each do |category, enrollment_rows|
       enrollment_rows.each do |row|
-        empty?(category, row) if @enrollments.empty?
-        unique_enrollment?(category, row)
+        if @enrollments.empty?
+          empty?(category, row)
+        else
+          unique_enrollment?(category, row)
+        end
       end
     end
   end
 
   def unique_enrollment?(category, row)
-    if find_by_name(row[:location]) == nil
+    enrollment = find_by_name(row[:location])
+    if enrollment == nil
       @enrollments << @enrollment_formatter.district_yearly_data(category, row)
     else
-      @enrollment_formatter.append_district_yearly_data(catergory, row)
+      @enrollment_formatter.append_district_yearly_data(enrollment, row)
     end
   end
 
@@ -35,11 +40,15 @@ class EnrollmentRepository
   end
 
   def find_by_name(name)
+    @enrollments.find do |enrollment|
+      name == enrollment.name
+    end
   end 
 
   def find_by_matching
+    find_all = @enrollments.select do |enrollment|
+      enrollment if enrollment.name.include?(word_fragment.upcase)
+    end
+    find_all
   end
-
-
-
 end 
