@@ -1,5 +1,4 @@
 require_relative 'district_repo'
-require_relative 'enrollment_repo'
 
 class EnrollmentAnalysis
 
@@ -11,16 +10,16 @@ class EnrollmentAnalysis
     @district_repo.enrollment_repo.find_by_name(district)
   end
 
-  def district_average(district)
+  def kindergarten_average(district)
     district = pull_district_objects(district)
     district_avg = (district.kindergarten_data.values.inject(:+) / district.kindergarten_data.count).round(3)
   end 
 
-  def participation_rate_variation(district1, district2)
-    comparison = (district_average(district1) / district_average(district2)).round(3)
+  def kindergarten_state_comparison(district1, district2)
+    comparison = (kindergarten_average(district1) / kindergarten_average(district2)).round(3)
   end
 
-  def participation_rate_variation_trend(district1, district2)
+  def kindergarten_rate_variation_trend(district1, district2)
     district1 = pull_district_objects(district1)
     district2 = pull_district_objects(district2)
     yearly_comparison = {}    
