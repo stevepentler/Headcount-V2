@@ -15,30 +15,32 @@ class HeadcountAnalystTest < Minitest::Test
     dr
   end 
 
-  def test_district_kg_average
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
-    assert_equal 0.3, ha.district_kindergarten_average("ADAMS COUNTY 14")
-  end 
+  #################moved to kindergarten analysis test ################
 
-  def test_kindergarden_participation_rate
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)    
-    assert_equal 2, ha.kindergarten_participation_rate_variation("ADAMS COUNTY 14", "COLORADO")
-  end 
+  # def test_district_kg_average   
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)
+  #   assert_equal 0.3, ha.district_kindergarten_average("ADAMS COUNTY 14")
+  # end 
 
-  def test_kindergarden_participation_rate
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)    
-    assert_equal 0.566, ha.kindergarten_participation_rate_variation("ADAMS COUNTY 14", "COLORADO")
-  end 
+  # def test_kindergarden_participation_rate
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)    
+  #   assert_equal 2, ha.kindergarten_participation_rate_variation("ADAMS COUNTY 14", "COLORADO")
+  # end 
 
-  def test_kindergarten_participation_rate_variation_trend
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)    
-    expected_hash = {"2007"=>0.775, "2006"=>0.869, "2005"=>1.079}
-    assert_equal expected_hash, ha.kindergarten_participation_rate_variation_trend("ADAMS COUNTY 14", "COLORADO")
-  end
+  # def test_kindergarden_participation_rate
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)    
+  #   assert_equal 0.566, ha.kindergarten_participation_rate_variation("ADAMS COUNTY 14", "COLORADO")
+  # end 
+
+  # def test_kindergarten_participation_rate_variation_trend
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)    
+  #   expected_hash = {"2007"=>0.775, "2006"=>0.869, "2005"=>1.079}
+  #   assert_equal expected_hash, ha.kindergarten_participation_rate_variation_trend("ADAMS COUNTY 14", "COLORADO")
+  # end
 
   def test_kg_hs_comparison_returns_integer
   end 

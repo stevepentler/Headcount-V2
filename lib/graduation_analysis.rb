@@ -16,10 +16,10 @@ class GraduationAnalysis
   end 
 
   def graduation_state_comparison(district1, district2)
-    comparison = (district_graduation_average(district1) / district_graduation_average(district2)).round(3)
+    comparison = (graduation_average(district1) / graduation_average(district2)).round(3)
   end
 
-  def graduation_participation_rate_variation_trend(district1, district2)
+  def graduation_rate_variation_trend(district1, district2)
     district1 = pull_district_objects(district1)
     district2 = pull_district_objects(district2)
     yearly_comparison = {}    
