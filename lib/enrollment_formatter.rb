@@ -1,4 +1,5 @@
 require_relative 'enrollment'
+require 'pry'
 
 class EnrollmentFormatter
 
@@ -7,11 +8,20 @@ class EnrollmentFormatter
   end
 
   def district_yearly_data(category, row)
-    Enrollment.new({:name => row[:location], category => yearly_data(row)})
+    enrollment = Enrollment.new({:name => row[:location]})
+    merge_enroll_data(enrollment, {category => yearly_data(row)})
+    enrollment
   end
 
   def append_district_yearly_data(enrollment, category, row)
-    enrollment.merge_enroll_data({category => yearly_data(row)}) 
+    merge_enroll_data(enrollment, {category => yearly_data(row)})
   end
 
-end 
+  def merge_enroll_data(enrollment, enroll_data)
+    if enroll_data.has_key?(:kindergarten)
+      enrollment.kindergarten_data.merge!(enroll_data[:kindergarten])
+    elsif enroll_data.has_key?(:high_school_graduation)
+      enrollment.graduation_data.merge!(enroll_data[:high_school_graduation])
+    end
+  end
+end
