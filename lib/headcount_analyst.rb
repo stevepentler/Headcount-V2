@@ -1,22 +1,43 @@
 require 'kindergarten_analysis'
+require 'graduation_analysis'
 class HeadcountAnalyst
+
+  attr_reader :kindergarten_analysis, :graduation_analysis
 
   def initialize(district_repo)
     @district_repo = district_repo
-    @enrollment_analysis = KindergartenAnalysis.new(district_repo)
+    @kindergarten_analysis = KindergartenAnalysis.new(district_repo)
+    @graduation_analysis = GraduationAnalysis.new(district_repo)
   end
 
   def district_kindergarten_average(district)
-    @enrollment_analysis.kindergarten_average(district)
+    kindergarten_analysis.kindergarten_average(district)
   end 
 
   def kindergarten_participation_rate_variation(district1, district2)
-    @enrollment_analysis.kindergarten_state_comparison(district1, district2)
+    kindergarten_analysis.kindergarten_state_comparison(district1, district2)
   end
 
   def kindergarten_participation_rate_variation_trend(district1, district2)
-    @enrollment_analysis.kindergarten_rate_variation_trend(district1, district2)
+    kindergarten_analysis.kindergarten_rate_variation_trend(district1, district2)
   end
+
+  def graduation_participation_rate_variation(district1, district2)
+    graduation_analysis.graduation_state_comparison(district1, district2)
+  end
+
+  def kindergarten_participation_against_high_school_graduation(district)
+    comparison = (kindergarten_participation_rate_variation(district, "Colorado") / 
+      graduation_participation_rate_variation(district, "Colorado")).round(3)
+    comparison
+  end 
+
+
+
+
+
+
+
 end 
 
   # def kindergarten_participation_against_high_school_graduation(district)

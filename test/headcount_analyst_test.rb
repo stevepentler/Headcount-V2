@@ -43,12 +43,31 @@ class HeadcountAnalystTest < Minitest::Test
   # end
 
   def test_kg_hs_comparison_returns_integer
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal Float, ha.kindergarten_participation_against_high_school_graduation("ACADEMY 20").class
   end 
 
   def test_kg_hs_comparison_for_single_district
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal 0.578 , ha.kindergarten_participation_against_high_school_graduation("ACADEMY 20")
+  end 
+
+  def test_kg_hs_comparison_for_single_district_part_two
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal 1.88 , ha.kindergarten_participation_against_high_school_graduation("JOHNSTOWN-MILLIKEN RE-5J")
+  end 
+
+  def test_kg_hs_comparison_for_colorado_against_colorado_equals_one
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal 1 , ha.kindergarten_participation_against_high_school_graduation("COLORADO")
   end 
 
   def test_kg_hs_correlation_returns_boolean
+
   end 
 
   def test_kg_hs_correlation_returns_true_for_range
