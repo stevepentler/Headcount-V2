@@ -75,13 +75,13 @@ class HeadcountAnalystTest < Minitest::Test
   def test_kg_hs_correlation_returns_true_for_district_in_range
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal true, ha.kindergarten_participation_correlates_with_high_school_graduation("ADAMS COUNTY 14")
+    assert_equal true, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "ADAMS COUNTY 14")
   end 
 
   def test_kg_hs_correlation_returns_false_for_district_outside_range
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal false, ha.kindergarten_participation_correlates_with_high_school_graduation("JOHNSTOWN-MILLIKEN RE-5J")
+    assert_equal false, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "JOHNSTOWN-MILLIKEN RE-5J")
   end 
 
   def test_kg_hs_correlation_statewide_true_for_seventy_percent_plus
