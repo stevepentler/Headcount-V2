@@ -38,5 +38,38 @@ class HeadcountAnalystTest < Minitest::Test
     expected_hash = {"2007"=>0.775, "2006"=>0.869, "2005"=>1.079}
     assert_equal expected_hash, ha.kindergarten_participation_rate_variation_trend("ADAMS COUNTY 14", "COLORADO")
   end
-end
+
+  def test_kg_hs_comparison_returns_integer
+  end 
+
+  def test_kg_hs_comparison_for_single_district
+  end 
+
+  def test_kg_hs_correlation_returns_boolean
+  end 
+
+  def test_kg_hs_correlation_returns_true_for_range
+  end
+
+  def test_kg_hs_correlation_returns_false_outside_range
+  end 
+
+  def testtest_kg_hs_correlation_statewide_returns_boolean
+  end 
+
+  def test_kg_hs_correlation_statewide_true_for_seventy_percent_plus
+  end 
+
+  def test_kg_hs_correlation_statewide_false_for_less_than_seventy_percent
+  end
+
+  def test_kg_hs_correlation_multiple_districts_returns_boolean
+  end 
+
+  def test_kg_hs_correlation_multiple_districts_true_for_seventy_percent_plus
+  end 
+
+  def test_kg_hs_correlation_multiple_districts_false_for_less_than_seventy_percent
+  end
+end 
 

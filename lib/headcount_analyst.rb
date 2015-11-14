@@ -34,4 +34,7 @@ class HeadcountAnalyst
     end 
     yearly_comparison
   end 
+
+  def kindergarten_participation_correlates_with_high_school_graduation(district)
+  end 
 end 
