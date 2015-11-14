@@ -5,7 +5,7 @@ require_relative 'enrollment_repo'
 
 class DistrictRepository
 
-  attr_reader :districts, :parsed_csv
+  attr_reader :districts, :parsed_csv, :enrollment_repo
   
   def initialize
     @districts = []
@@ -16,8 +16,16 @@ class DistrictRepository
     csv_parser = CSVParser.new(csv_paths) 
     @parsed_csv = csv_parser.parsed_csv
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)} #only using for district names
-    # e = EnrollmentRepository.new
-    # e.unique_enrollment?(@parsed_csv)
+    @enrollment_repo = EnrollmentRepository.new
+    @enrollment_repo.load_data(@parsed_csv)
+    create_data_enroll_link
+  end
+
+  def create_data_enroll_link
+    @districts.each do |district|
+      temp = @enrollment_repo.find_by_name(district.name)
+      district.enrollment = temp
+    end
   end
 
   def unique_district?(parse)
