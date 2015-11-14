@@ -1,9 +1,9 @@
-require 'enrollment_analysis'
+require 'kindergarten_analysis'
 class HeadcountAnalyst
 
   def initialize(district_repo)
     @district_repo = district_repo
-    @enrollment_analysis = EnrollmentAnalysis.new(district_repo)
+    @enrollment_analysis = KindergartenAnalysis.new(district_repo)
   end
 
   def district_kindergarten_average(district)
@@ -33,14 +33,14 @@ end
 
   # def kindergarten_participation_correlates_with_high_school_graduation(statewide)
   #   # #iterate through each district
-  #   # #count number of districts where:
-  #   # districts_above_seventy = statewide.count do |district|
-  #   #   #kindergarten_participation_against_high_school_graduation(district) 
-  #   # kindergarten_participation_correlates_with_high_school_graduation(district)
-  #   # end 
-  #   # #true if count / districts.count > 0.70
-  #   # true if (districts_above_seventy / districts.count) > 0.70 
-  # end 
+  # #   # #count number of districts where:
+  #   districts_above_seventy = statewide.count do |district|
+  #     #kindergarten_participation_against_high_school_graduation(district) 
+  #   kindergarten_participation_correlates_with_high_school_graduation(district)
+  # #   # end 
+  # #   # #true if count / districts.count > 0.70
+  #   true if (districts_above_seventy / districts.count) > 0.70 
+  # # end 
 
 
 

@@ -1,6 +1,6 @@
 require_relative 'district_repo'
 
-class EnrollmentAnalysis
+class KindergartenAnalysis
 
   def initialize(district_repo)
   @district_repo = district_repo
