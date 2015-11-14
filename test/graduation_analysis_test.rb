@@ -54,14 +54,14 @@ class GraduationAnalysisTest < Minitest::Test
   def test_graduation_participation_rate_variation_trend
     dr = district_repo
     ga = GraduationAnalysis.new(dr)    
-    expected_hash = {"2012"=>1.238, "2013"=>"No Comparison", "2014"=>1.162}
+    expected_hash = {"2012"=>1.238, "2013"=>nil, "2014"=>1.162}
     assert_equal expected_hash, ga.graduation_rate_variation_trend("ACADEMY 20", "COLORADO")
   end
 
   def test_graduation_participation_rate_variation_trend_for_no_overlapping_years
     dr = district_repo
     ga = GraduationAnalysis.new(dr)   
-    expected_hash = {"2010"=>"No Comparison", "2011"=>"No Comparison"}  
+    expected_hash = {"2010"=>nil, "2011"=>nil}  
     assert_equal expected_hash, ga.graduation_rate_variation_trend("ADAMS-ARAPAHOE 28J", "ADAMS COUNTY 14")  
   end
 end 

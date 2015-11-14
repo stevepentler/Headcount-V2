@@ -28,7 +28,7 @@ class KindergartenAnalysis
         division = district1.kindergarten_data[year] / district2.kindergarten_data[year]
         yearly_comparison[year] = division.round(3)
        else 
-        yearly_comparison[year] = "No Comparison"
+        yearly_comparison[year] = nil
       end 
     end 
     yearly_comparison

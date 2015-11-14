@@ -28,7 +28,7 @@ class GraduationAnalysis
         division = district1.graduation_data[year] / district2.graduation_data[year]
         yearly_comparison[year] = division.round(3)
       else 
-        yearly_comparison[year] = "No Comparison"
+        yearly_comparison[year] = nil
       end 
     end 
     yearly_comparison 

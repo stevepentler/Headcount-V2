@@ -61,7 +61,7 @@ class KindergartenAnalysisTest < Minitest::Test
   def test_kindergarten_participation_rate_variation_trend
     dr = district_repo
     ka = KindergartenAnalysis.new(dr)    
-    expected_hash = {"2007"=>0.781, "2006"=>0.828, "2005"=>"No Comparison"}
+    expected_hash = {"2007"=>0.781, "2006"=>0.828, "2005"=>nil}
     assert_equal expected_hash, ka.kindergarten_rate_variation_trend("ADAMS COUNTY 14", "ACADEMY 20")
   end
 
@@ -69,7 +69,7 @@ class KindergartenAnalysisTest < Minitest::Test
   def test_kindergarten_participation_rate_variation_trend_for_no_overlapping_years
     dr = district_repo
     ka = KindergartenAnalysis.new(dr)  
-    hash = {"2007"=>"No Comparison", "2006"=>"No Comparison"}
+    hash = {"2007"=>nil, "2006"=>nil}
     assert_equal hash, ka.kindergarten_rate_variation_trend("ACADEMY 20", "JOHNSTOWN-MILLIKEN RE-5J")
   end
 end 
