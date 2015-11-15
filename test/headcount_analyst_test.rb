@@ -42,6 +42,8 @@ class HeadcountAnalystTest < Minitest::Test
   #   assert_equal expected_hash, ha.kindergarten_participation_rate_variation_trend("ADAMS COUNTY 14", "COLORADO")
   # end
 
+  #########################################
+
   def test_kg_hs_comparison_returns_integer
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
@@ -60,12 +62,6 @@ class HeadcountAnalystTest < Minitest::Test
     assert_equal 1.88 , ha.kindergarten_participation_against_high_school_graduation("JOHNSTOWN-MILLIKEN RE-5J")
   end 
 
-  def test_kg_hs_comparison_for_colorado_against_colorado_equals_one
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
-    assert_equal 1 , ha.kindergarten_participation_against_high_school_graduation("COLORADO")
-  end 
-
   def test_kg_hs_comparison_for_mismatched_years
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
@@ -82,6 +78,12 @@ class HeadcountAnalystTest < Minitest::Test
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
     assert_equal false, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "JOHNSTOWN-MILLIKEN RE-5J")
+  end 
+
+  def test_kg_hs_correlation_returns_gfdgfdgdf
+    dr = district_repo
+    ha = HeadcountAnalyst.new(dr)
+    assert_equal 4 , ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "STATEWIDE")
   end 
 
   def test_kg_hs_correlation_statewide_true_for_seventy_percent_plus

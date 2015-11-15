@@ -1,13 +1,16 @@
 require 'kindergarten_analysis'
 require 'graduation_analysis'
+require 'kindergarten_graduation_analysis'
+
 class HeadcountAnalyst
 
-  attr_reader :kindergarten_analysis, :graduation_analysis
+  attr_reader :kindergarten_analysis, :graduation_analysis, :kindergarten_graduation_analysis
 
   def initialize(district_repo)
     @district_repo = district_repo
     @kindergarten_analysis = KindergartenAnalysis.new(district_repo)
     @graduation_analysis = GraduationAnalysis.new(district_repo)
+    @kindergarten_graduation_analysis = KindergartenGraduationAnalysis.new(district_repo)
   end
 
   def district_kindergarten_average(district)
@@ -33,17 +36,33 @@ class HeadcountAnalyst
   end 
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
+    binding.pry
     if district.has_key?(:for)
-      correlation = kindergarten_participation_against_high_school_graduation(district[:for])
-      (correlation  > 0.6 && correlation < 1.5)
-    end
+      kindergarten_graduation_analysis.correlation(district)
+      # correlation = kindergarten_participation_against_high_school_graduation(district[:for])
+      # (correlation  > 0.6 && correlation < 1.5)
+    elsif district[:for] == "STATEWIDE"
+      kindergarten_graduation_analysis.statewide_correlation
+     # district.has_key(:for) && district.has_value?("STATEWIDE")
+         # counter = @district_repo.count do |object|
+         #  kindergarten_participation_against_high_school_graduation(district[:for])
+         # (correlation  > 0.6 && correlation < 1.5)
+    elsif district[:across]
+      kindergarten_graduation_analysis.correlation_for_multiple_districts(district)
+    end 
   end 
-
-
-
-
-
 end 
+
+   # enrollment_repo.find_by_name("Colorado").name
+     #  unless  "Colorado" == @district_repo.enrollment_repo.find_by_name("Colorado").name
+   
+     #   end 
+        
+     # end 
+    #   binding.pry
+    #   colorado_data = @district_repo.enrollment_repo.find_by_name("Colorado") #returns colorado enrollment object
+    #   subtract_colorado = district_repo - colorado_data
+  #   end 
 
 
   # def kindergarten_participation_correlates_with_high_school_graduation(district)

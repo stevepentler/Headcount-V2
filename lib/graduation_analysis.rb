@@ -16,7 +16,9 @@ class GraduationAnalysis
   end 
 
   def graduation_state_comparison(district1, district2)
-    comparison = (graduation_average(district1) / graduation_average(district2)).round(3)
+    unless district1.upcase == "COLORADO"
+      comparison = (graduation_average(district1) / graduation_average(district2)).round(3)
+    end
   end
 
   def graduation_rate_variation_trend(district1, district2)

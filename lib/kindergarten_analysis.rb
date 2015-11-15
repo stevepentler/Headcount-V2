@@ -16,7 +16,9 @@ class KindergartenAnalysis
   end 
 
   def kindergarten_state_comparison(district1, district2)
-    comparison = (kindergarten_average(district1) / kindergarten_average(district2)).round(3)
+    unless district1.upcase == "COLORADO"
+      comparison = (kindergarten_average(district1) / kindergarten_average(district2)).round(3)
+    end
   end
 
   def kindergarten_rate_variation_trend(district1, district2)
