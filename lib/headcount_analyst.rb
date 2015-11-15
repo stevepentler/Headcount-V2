@@ -32,19 +32,18 @@ class HeadcountAnalyst
     comparison
   end 
 
-
+  def kindergarten_participation_correlates_with_high_school_graduation(district)
+    if district.has_key?(:for)
+      correlation = kindergarten_participation_against_high_school_graduation(district[:for])
+      (correlation  > 0.6 && correlation < 1.5)
+    end
+  end 
 
 
 
 
 
 end 
-
-  # def kindergarten_participation_against_high_school_graduation(district)
-  #   kindergarten_variation = kindergarten_participation_rate_variation_trend(district1, "Colorado")
-  #   graduation_variation = graduation_participation_rate_variation_trend(district1, "Colorado")
-  #   comparison = (kindergarten_variation / graduation_variation)
-  # end 
 
 
   # def kindergarten_participation_correlates_with_high_school_graduation(district)
