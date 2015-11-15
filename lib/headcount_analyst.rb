@@ -36,22 +36,27 @@ class HeadcountAnalyst
   end 
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
-    binding.pry
-    if district.has_key?(:for)
-      kindergarten_graduation_analysis.correlation(district)
-      # correlation = kindergarten_participation_against_high_school_graduation(district[:for])
-      # (correlation  > 0.6 && correlation < 1.5)
-    elsif district[:for] == "STATEWIDE"
-      kindergarten_graduation_analysis.statewide_correlation
-     # district.has_key(:for) && district.has_value?("STATEWIDE")
-         # counter = @district_repo.count do |object|
-         #  kindergarten_participation_against_high_school_graduation(district[:for])
-         # (correlation  > 0.6 && correlation < 1.5)
-    elsif district[:across]
-      kindergarten_graduation_analysis.correlation_for_multiple_districts(district)
-    end 
+    comparison = kindergarten_participation_against_high_school_graduation(district)
+    true if (comparison > 0.6 && comparison < 1.5)
   end 
 end 
+#   def kindergarten_participation_correlates_with_high_school_graduation(district)
+#     binding.pry
+#     if district.has_key?(:for)
+#       kindergarten_graduation_analysis.correlation(district)
+#       # correlation = kindergarten_participation_against_high_school_graduation(district[:for])
+#       # (correlation  > 0.6 && correlation < 1.5)
+#     elsif district[:for] == "STATEWIDE"
+#       kindergarten_graduation_analysis.statewide_correlation
+#      # district.has_key(:for) && district.has_value?("STATEWIDE")
+#          # counter = @district_repo.count do |object|
+#          #  kindergarten_participation_against_high_school_graduation(district[:for])
+#          # (correlation  > 0.6 && correlation < 1.5)
+#     elsif district[:across]
+#       kindergarten_graduation_analysis.correlation_for_multiple_districts(district)
+#     end 
+#   end 
+# end 
 
    # enrollment_repo.find_by_name("Colorado").name
      #  unless  "Colorado" == @district_repo.enrollment_repo.find_by_name("Colorado").name
@@ -65,21 +70,6 @@ end
   #   end 
 
 
-  # def kindergarten_participation_correlates_with_high_school_graduation(district)
-  #   # comparison = kindergarten_participation_against_high_school_graduation(district)
-  #   # true if comparison > 0.6 && < 1.5
-  # end 
-
-  # def kindergarten_participation_correlates_with_high_school_graduation(statewide)
-  #   # #iterate through each district
-  # #   # #count number of districts where:
-  #   districts_above_seventy = statewide.count do |district|
-  #     #kindergarten_participation_against_high_school_graduation(district) 
-  #   kindergarten_participation_correlates_with_high_school_graduation(district)
-  # #   # end 
-  # #   # #true if count / districts.count > 0.70
-  #   true if (districts_above_seventy / districts.count) > 0.70 
-  # # end 
 
 
 
