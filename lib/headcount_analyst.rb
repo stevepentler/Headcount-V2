@@ -13,31 +13,48 @@ class HeadcountAnalyst
     @kindergarten_graduation_analysis = KindergartenGraduationAnalysis.new(district_repo)
   end
 
+  def eliminate_key(district)
+    if district.class == String
+      district
+    elsif district.has_key?(:for)
+      district = district.delete(:for)
+    elsif district.has_key?(:against)
+      district = district.delete(:against)
+    end 
+  end 
+
   def district_kindergarten_average(district)
     kindergarten_analysis.kindergarten_average(district)
   end 
 
   def kindergarten_participation_rate_variation(district1, district2)
+    district2 = eliminate_key(district2)
     kindergarten_analysis.kindergarten_state_comparison(district1, district2)
   end
 
   def kindergarten_participation_rate_variation_trend(district1, district2)
+    district2 = eliminate_key(district2)
     kindergarten_analysis.kindergarten_rate_variation_trend(district1, district2)
   end
 
   def graduation_participation_rate_variation(district1, district2)
+    district2 = eliminate_key(district2)
     graduation_analysis.graduation_state_comparison(district1, district2)
   end
 
   def kindergarten_participation_against_high_school_graduation(district)
-    comparison = (kindergarten_participation_rate_variation(district, "Colorado") / 
-      graduation_participation_rate_variation(district, "Colorado")).round(3)
+    district = eliminate_key(district)
+    comparison = (kindergarten_participation_rate_variation(district, :against => "Colorado") / 
+      graduation_participation_rate_variation(district, :against => "Colorado")).round(3)
     comparison
   end 
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
-    comparison = kindergarten_participation_against_high_school_graduation(district)
-    true if (comparison > 0.6 && comparison < 1.5)
+    if district.has_key?(:for)
+      district = eliminate_key(district)
+      comparison = kindergarten_participation_against_high_school_graduation(district)
+      (comparison > 0.6 && comparison < 1.5) ? true : false
+    end 
   end 
 end 
 #   def kindergarten_participation_correlates_with_high_school_graduation(district)
@@ -57,17 +74,6 @@ end
 #     end 
 #   end 
 # end 
-
-   # enrollment_repo.find_by_name("Colorado").name
-     #  unless  "Colorado" == @district_repo.enrollment_repo.find_by_name("Colorado").name
-   
-     #   end 
-        
-     # end 
-    #   binding.pry
-    #   colorado_data = @district_repo.enrollment_repo.find_by_name("Colorado") #returns colorado enrollment object
-    #   subtract_colorado = district_repo - colorado_data
-  #   end 
 
 
 
