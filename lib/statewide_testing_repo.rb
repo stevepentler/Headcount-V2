@@ -6,7 +6,7 @@ class StatewideRepository
   attr_reader :statewide_tests
 
   def initialize
-    @statewide_tests = []
+    @statewide_tests =  s
     @statewide_tests_formatter = StatewideTestFormatter.new
   end
 
