@@ -2,8 +2,6 @@ require 'kindergarten_graduation_analysis'
 
 class HeadcountAnalyst
 
-  include KeywordParser
-
   attr_reader :kindergarten_graduation_analysis
 
   def initialize(district_repo)

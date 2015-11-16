@@ -1,4 +1,4 @@
- require 'kindergarten_analysis'
+require 'kindergarten_analysis'
 require 'graduation_analysis'
 require 'kindergarten_graduation_analysis'
 require 'enrollment_repo'
@@ -48,7 +48,6 @@ class KindergartenGraduationAnalysis
       graduation_participation_rate_variation(district, :against => "COLORADO")).round(3)
     comparison
   end
-
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
     if district.has_key?(:for) && district[:for] == "STATEWIDE"
