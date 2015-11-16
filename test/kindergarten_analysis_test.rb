@@ -39,7 +39,7 @@ class KindergartenAnalysisTest < Minitest::Test
     assert_equal 2.264, ka.kindergarten_state_comparison("JOHNSTOWN-MILLIKEN RE-5J", "COLORADO")
   end 
 
-   def test_kindergarden_state_comparison_less_than_one
+  def test_kindergarden_state_comparison_less_than_one
     dr = district_repo
     ka = KindergartenAnalysis.new(dr)    
     assert_equal 0.704, ka.kindergarten_state_comparison("ACADEMY 20", "COLORADO")
