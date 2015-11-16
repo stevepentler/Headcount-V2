@@ -1,6 +1,6 @@
 class StatewideTest
 
-  attr_reader :name, :yearly_data, :kindergarten_data, :graduation_data
+  attr_reader :name, :by_grade, :by_race
 
   def initialize(statewide_test_data)
     @name = statewide_test_data[:name]

@@ -7,19 +7,20 @@ require './lib/csv_parser'
 class StatewideRepositoryTest < Minitest::Test
 
   def input
-    csv = CSVParser.new( :statewide_testing => {
-                            :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
-                            :eigth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
-                            :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
-                            :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
-                            :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
-                                  }
-                              })
+    csv = CSVParser.new( {
+                          :statewide_testing => {
+                              :third_grade => "./data/3rd grade students scoring proficient or above on the CSAP_TCAP.csv",
+                              :eigth_grade => "./data/8th grade students scoring proficient or above on the CSAP_TCAP.csv",
+                              :math => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Math.csv",
+                              :reading => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Reading.csv",
+                              :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
+                              }
+                          })
     csv.parsed_csv
   end
 
   def test_repo_stores_object_name
-    er = StatewideTestFormatter.new
+    er = StatewideTestRepository.new
     er.load_data(input)
     binding.pry
     assert_equal "ACADEMY 20", er.enrollments[0].name
@@ -56,4 +57,4 @@ class StatewideRepositoryTest < Minitest::Test
 #   #     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
 #   #   assert true
 #   # end
-# end
+end

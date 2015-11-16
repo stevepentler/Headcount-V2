@@ -1,61 +1,70 @@
-require_relative 'state_wide_test'
+require_relative 'statewide_test'
 require 'pry'
 
-class EnrollmentFormatter
+class StatewideTestFormatter
 
-  def yearly_data(row)
-    sub_hash = {row[:subject] => row[:data].to_f.round(3)}
+  def yearly_data(category, row)
+    binding.pry
+    if category == 3 || 8
+      binding.pry
+      sub_hash = {category => {row[:timeframe] => {row[:score] => row[:data].to_f.round(3)}}}
+    else
+      binding.pry
+      sub_hash = {row[:race_ethnicity] => {row[:timeframe] => {row[category] => row[:data].to_f.round(3)}}}
+    end
   end
 
   def district_yearly_data(category, row)
-    enrollment = Enrollment.new({:name => row[:location]})
-    merge_enroll_data(enrollment, {row[:timeframe] => yearly_data(row)}
-    enrollment
+    binding.pry
+    statewide_test = StatewideTest.new({:name => row[:location]})
+    append_district_yearly_data(statewide_test, category, row)
+    statewide_test
   end
 
-  def append_district_yearly_data(enrollment, category, row)
-    merge_enroll_data(enrollment, {category => yearly_data(row)})
+  def append_district_yearly_data(statewide_test, category, row)
+    binding.pry
+    merge_test_data(statewide_test, yearly_data(category, row), category, row)
   end
 
-  def merge_test_data(enrollment, enroll_data)
-    if enroll_data.has_key?([category])
-      merge_test_by_race(enrollment, enroll_data)
+  def merge_test_data(statewide_test, yearly_data, category, row)
+    binding.pry
+    if statewide_test == 3 || 8
+      binding.pry
+      merge_test_by_grade(statewide_test, yearly_data, category, row[:timeframe])
     else
-      merge_test_by_grade(enrollment, enroll_data)
+      binding.pry
+      merge_test_by_race(statewide_test, yearly_data, category, row[:timeframe])
     end
   end
 
-  def merge_test_by_race(enrollment, enroll_data)
-    if enrollment.by_race.has_key?([race][year])
-      enrollment.by_race.merge!(enroll_data[race][year])
-    elsif enrollment.by_race
-      enrollment.by_race.merge!(enroll_data[race])
-    end
+  def merge_test_by_race(object_info, row)
+  #   binding.pry
+  #   if object_info[:object].by_race.has_key?([object_info[:category]][row[:timeframe]])
+  #     binding.pry
+  #      object_info[:object].by_race[object_info[:category]][row][:timeframe]].merge!([row]:category]][object_info[:row][:timeframe]])
+  #      binding.pry
+  #   elsif object_info[:object].by_race.has_key?([object_info[:category]])
+  #     binding.pry
+  #      object_info[:object].by_race[object_info[:category]].merge!([object_info[:category]])
+  #      binding.pry
+  #   else
+  #     binding.pry
+  #     object_info[:object].by_race.merge!(object_info)
+  #   end
   end
 
-  def merge_test_by_grade(enrollment, enroll_data)
-    if enrollment.by_grade.has_key?([grade][year])
-      enrollment.by_race.merge!(enroll_data[grade][year])
+  def merge_test_by_grade(statewide_test, yearly_data, category, timeframe)
+    binding.pry
+    if statewide_test.by_grade.has_key?([category][timeframe])
+      binding.pry
+       statewide_test.by_grade[category][timeframe].merge!(yearly_data[category][timeframe])
+       binding.pry
+    elsif statewide_test.by_grade.has_key?([category])
+      binding.pry
+       statewide_test.by_grade[category].merge!(yearly_data[category])
     else
-      enrollment.by_grade.merge!(enroll_data[grade])
+      binding.pry
+      statewide_test.by_grade.merge!(yearly_data)
     end
+  end
 end
-
-#by_grade =
-#      {3 =>
-#           { 2008 => {:math => 0.857, :reading => 0.866, :writing => 0.671},
-  #           2009 => {:math => 0.824, :reading => 0.862, :writing => 0.706},
-  #           2010 => {:math => 0.849, :reading => 0.864, :writing => 0.662},
-  #           2011 => {:math => 0.819, :reading => 0.867, :writing => 0.678},
-  #           2012 => {:math => 0.830, :reading => 0.870, :writing => 0.655},
-  #           2013 => {:math => 0.855, :reading => 0.859, :writing => 0.668},
-  #           2014 => {:math => 0.834, :reading => 0.831, :writing => 0.639}
-  #    },
-  #    8 =>
-  #         { 2008 => {:math => 0.857, :reading => 0.866, :writing => 0.671},
-  #           2009 => {:math => 0.824, :reading => 0.862, :writing => 0.706},
-  #           2010 => {:math => 0.849, :reading => 0.864, :writing => 0.662},
-  #           2011 => {:math => 0.819, :reading => 0.867, :writing => 0.678},
-  #           2012 => {:math => 0.830, :reading => 0.870, :writing => 0.655},
-  #           2013 => {:math => 0.855, :reading => 0.859, :writing => 0.668},
-  #           2014 => {:math => 0.834, :reading => 0.831, :writing => 0.639}
