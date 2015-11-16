@@ -1,16 +1,21 @@
 require 'kindergarten_analysis'
 require 'graduation_analysis'
 require 'kindergarten_graduation_analysis'
+require 'enrollment_repo'
 
 class HeadcountAnalyst
 
-  attr_reader :kindergarten_analysis, :graduation_analysis, :kindergarten_graduation_analysis
+  attr_reader :kindergarten_analysis, 
+              :graduation_analysis, 
+              :kindergarten_graduation_analysis,
+              :enrollment_repo
 
   def initialize(district_repo)
     @district_repo = district_repo
     @kindergarten_analysis = KindergartenAnalysis.new(district_repo)
     @graduation_analysis = GraduationAnalysis.new(district_repo)
     @kindergarten_graduation_analysis = KindergartenGraduationAnalysis.new(district_repo)
+    @enrollment_repo = EnrollmentRepository.new
   end
 
   def eliminate_key(district)
@@ -44,19 +49,57 @@ class HeadcountAnalyst
 
   def kindergarten_participation_against_high_school_graduation(district)
     district = eliminate_key(district)
-    comparison = (kindergarten_participation_rate_variation(district, :against => "Colorado") / 
-      graduation_participation_rate_variation(district, :against => "Colorado")).round(3)
+    comparison = (kindergarten_participation_rate_variation(district, :against => "COLORADO") / 
+      graduation_participation_rate_variation(district, :against => "COLORADO")).round(3)
     comparison
   end 
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
-    if district.has_key?(:for)
+    if district.has_key?(:for) && district[:for] == "STATEWIDE"
+      district = eliminate_key(district)
+      districts_minus_colorado = @district_repo.enrollment_repo.enrollments.reject do |enrollment| 
+          enrollment.name == "COLORADO"
+      end 
+      districts_in_range = districts_minus_colorado.count do |enrollment|
+        comparison = kindergarten_participation_against_high_school_graduation(enrollment.name)
+        (comparison > 0.6 && comparison < 1.5) ? true : false
+      end
+      ((districts_in_range / districts_minus_colorado.count) > 0.70) ? true : false
+    elsif district.has_key?(:for)
       district = eliminate_key(district)
       comparison = kindergarten_participation_against_high_school_graduation(district)
       (comparison > 0.6 && comparison < 1.5) ? true : false
+    # elsif district.has_key?(:against)
     end 
-  end 
-end 
+  end
+end
+
+
+
+
+
+      #bring in district as {:for => "STATEWIDE"}
+      #set holder = ALL DISTRICTS - "COLORADO"
+      #iterate through set_holder
+        #total = set_holder.count districts that evaluate to true with 
+          # comparison = kindergarten_participation_against_high_school_graduation(district)
+          # (comparison > 0.6 && comparison < 1.5) ? true : false
+        #end 
+      #(total / set_holder.count)
+
+      #enrollments.each do |enrollment|
+        #if  enrollment.name != "Colorado"
+
+      #ene
+    #end 
+
+
+
+
+
+#     end 
+#   end 
+# end 
 #   def kindergarten_participation_correlates_with_high_school_graduation(district)
 #     binding.pry
 #     if district.has_key?(:for)

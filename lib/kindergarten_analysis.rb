@@ -3,7 +3,7 @@ require_relative 'district_repo'
 class KindergartenAnalysis
 
   def initialize(district_repo)
-  @district_repo = district_repo
+    @district_repo = district_repo
   end
 
   def pull_district_objects(district)
@@ -16,7 +16,7 @@ class KindergartenAnalysis
   end 
 
   def kindergarten_state_comparison(district1, district2)
-    unless district1.upcase == "COLORADO"
+    unless district1 == "COLORADO"
       comparison = (kindergarten_average(district1) / kindergarten_average(district2)).round(3)
     end
   end

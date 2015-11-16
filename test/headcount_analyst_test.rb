@@ -89,10 +89,9 @@ class HeadcountAnalystTest < Minitest::Test
   end 
 
   def test_kg_hs_correlation_returns_gfdgfdgdf
-    skip
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 4 , ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "STATEWIDE")
+    assert_equal false , ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "STATEWIDE")
   end 
 
   def test_kg_hs_correlation_statewide_true_for_seventy_percent_plus

@@ -12,11 +12,11 @@ class GraduationAnalysis
 
   def graduation_average(district)
     district = pull_district_objects(district)
-    district_avg = (district.graduation_data.values.inject(:+) / district.graduation_data.count).round(3)
+    (district_avg = (district.graduation_data.values.inject(:+) / district.graduation_data.count).round(3))
   end 
 
   def graduation_state_comparison(district1, district2)
-    unless district1.upcase == "COLORADO"
+    unless district1 == "COLORADO"
       comparison = (graduation_average(district1) / graduation_average(district2)).round(3)
     end
   end

@@ -30,6 +30,7 @@ class CSVParser
     data_rows = []
     handle = CSV.read(data_path, :headers => true, header_converters: :symbol)
     handle.each do |row|
+      row[:location].upcase!
       data_rows << row
     end
     data_rows
