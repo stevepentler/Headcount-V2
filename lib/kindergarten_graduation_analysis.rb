@@ -1,6 +1,5 @@
 require 'kindergarten_analysis'
 require 'graduation_analysis'
-require 'kindergarten_graduation_analysis'
 require 'enrollment_repo'
 require 'keyword_parser_module'
 

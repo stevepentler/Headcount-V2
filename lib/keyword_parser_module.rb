@@ -10,4 +10,7 @@ module KeywordParser
       district = district.delete(:across)
     end
   end
+
+  def self.test_parser(information)
+  end
 end 
