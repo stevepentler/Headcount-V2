@@ -81,38 +81,46 @@ class HeadcountAnalystTest < Minitest::Test
     ha = HeadcountAnalyst.new(dr)
     assert_equal true, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "ADAMS COUNTY 14")
   end
+def test_kg_hs_correlation_returns_true_for_another_district_in_range
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal true, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "ADAMS-ARAPAHOE 28J")
+ end
 
-  def test_kg_hs_correlation_returns_false_for_district_outside_range
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
-    assert_equal false, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "JOHNSTOWN-MILLIKEN RE-5J")
-  end
+ def test_kg_hs_correlation_returns_false_for_district_outside_range
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal false, ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "JOHNSTOWN-MILLIKEN RE-5J")
+ end
 
-  def test_kg_hs_correlation_returns_gfdgfdgdf
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
-    assert_equal false , ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "STATEWIDE")
-  end
+ def test_kg_hs_correlation_returns_false_for_statewide
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal false , ha.kindergarten_participation_correlates_with_high_school_graduation(:for => "STATEWIDE")
+ end
 
+ def test_across_three_districts
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal false , ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ["ADAMS COUNTY 14", "JOHNSTOWN-MILLIKEN RE-5J", "ACADEMY 20"])
+ end
 
-  def test_across_districts
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
-    assert_equal false , ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ["ADAMS COUNTY 14", "JOHNSTOWN-MILLIKEN RE-5J", "ACADEMY 20"])
-  end
+ def test_across_four_districts
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal false , ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ["ADAMS COUNTY 14", "JOHNSTOWN-MILLIKEN RE-5J", "ACADEMY 20", "ADAMS-ARAPAHOE 28J"])
+ end
 
-  def test_kg_hs_correlation_statewide_true_for_seventy_percent_plus
-  end
+ def test_across_one_district
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal true , ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ["ADAMS COUNTY 14"])
+ end
 
-  def test_kg_hs_correlation_statewide_false_for_less_than_seventy_percent
-  end
+ def test_across_two_districts_known_to_be_true
+   dr = district_repo
+   ha = HeadcountAnalyst.new(dr)
+   assert_equal true , ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ["ADAMS COUNTY 14", "ADAMS-ARAPAHOE 28J"])
+ end
 
-  def test_kg_hs_correlation_multiple_districts_returns_boolean
-  end
-
-  def test_kg_hs_correlation_multiple_districts_true_for_seventy_percent_plus
-  end
-
-  def test_kg_hs_correlation_multiple_districts_false_for_less_than_seventy_percent
-  end
 end
