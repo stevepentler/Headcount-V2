@@ -24,6 +24,11 @@ class StatewideTestRepository
   end
 
   def unique_test?(category, row)
+    if category == :third_grade
+      category = 3
+    elsif category == :eigth_grade
+      category = 8
+    end
     state_test = find_by_name(row[:location])
     if state_test == nil || @statewide_tests.empty?
       @statewide_tests << @statewide_test_formatter.district_yearly_data(category, row)
