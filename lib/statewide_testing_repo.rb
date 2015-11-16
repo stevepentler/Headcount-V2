@@ -19,7 +19,7 @@ class StatewideTestRepository
     statewide_testing_csv.each do |category, test_rows|
       if category == :third_grade
         category = 3
-      elsif category == :eighth_grade
+      elsif category == :eigth_grade
         category = 8
       end
       test_rows.each do |row|
@@ -36,7 +36,6 @@ class StatewideTestRepository
     state_test = find_by_name(row[:location])
     if state_test == nil
       @statewide_tests << @statewide_test_formatter.district_yearly_data(category, row)
-      binding.pry
     else
       @statewide_test_formatter.append_district_yearly_data(state_test, category, row)
     end
@@ -44,7 +43,6 @@ class StatewideTestRepository
 
   def empty?(category, row)
      @statewide_tests << @statewide_test_formatter.district_yearly_data(category, row)
-     binding.pry
   end
 
   def find_by_name(name)

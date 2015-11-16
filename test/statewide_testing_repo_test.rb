@@ -22,39 +22,38 @@ class StatewideRepositoryTest < Minitest::Test
   def test_repo_stores_object_name
     er = StatewideTestRepository.new
     er.load_data(input)
-    binding.pry
-    assert_equal "ACADEMY 20", er.enrollments[0].name
+    assert_equal "COLORADO", er.statewide_tests[0].name
   end
 
-#   def test_finds_district_return_nil_missing_name
-#     er = StatewideTestFormatter.new
-#     er.load_data(input)
-#     assert_equal nil, er.find_by_name("Turing")
-#   end
-#
-#   def test_finds_district_by_name
-#     er = StatewideTestFormatter.new
-#     er.load_data(input)
-#     assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
-#   end
-#
-#   def test_finds_lowercase_name
-#     er = StatewideTestFormatter.new
-#     er.load_data(input)
-#     assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
-#   end
-#
-#   def test_name_returns_nil_invalid_search
-#     er = StatewideTestFormatter.new
-#     er.load_data(input)
-#     assert_equal nil, er.find_by_name("Turing")
-#   end
-#   # #
-#   # def test_reaches_to_district_repo_for_link
-#   #   dr = DistrictRepository.new
-#   #   dr.load_data({
-#   #     :enrollment => {
-#   #     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
-#   #   assert true
-#   # end
+  def test_finds_district_return_nil_missing_name
+    er = StatewideTestRepository.new
+    er.load_data(input)
+    assert_equal nil, er.find_by_name("Turing")
+  end
+
+  def test_finds_district_by_name
+    er = StatewideTestRepository.new
+    er.load_data(input)
+    assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
+  end
+
+  def test_finds_lowercase_name
+    er = StatewideTestRepository.new
+    er.load_data(input)
+    assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
+  end
+
+  def test_name_returns_nil_invalid_search
+    er = StatewideTestRepository.new
+    er.load_data(input)
+    assert_equal nil, er.find_by_name("Turing")
+  end
+  # #
+  # def test_reaches_to_district_repo_for_link
+  #   dr = DistrictRepository.new
+  #   dr.load_data({
+  #     :enrollment => {
+  #     :kindergarten => "./data/Kindergartners in full-day program.csv"}})
+  #   assert true
+  # end
 end

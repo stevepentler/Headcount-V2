@@ -4,66 +4,52 @@ require 'pry'
 class StatewideTestFormatter
 
   def yearly_data(category, row)
-    binding.pry
-    if category == 3 || 8
-      binding.pry
-      sub_hash = {category => {row[:timeframe] => {row[:score] => row[:data].to_f.round(3)}}}
+    if category.class == Fixnum
+      sub_hash = {category => {row[:timeframe].to_i => {row[:score] => row[:data].to_f.round(3)}}}
     else
-      binding.pry
-      sub_hash = {row[:race_ethnicity] => {row[:timeframe] => {row[category] => row[:data].to_f.round(3)}}}
+
+      sub_hash = {row[:race_ethnicity] => {row[:timeframe] => {category => row[:data].to_f.round(3)}}}
     end
   end
 
   def district_yearly_data(category, row)
-    binding.pry
     statewide_test = StatewideTest.new({:name => row[:location]})
     append_district_yearly_data(statewide_test, category, row)
     statewide_test
   end
 
   def append_district_yearly_data(statewide_test, category, row)
-    binding.pry
     merge_test_data(statewide_test, yearly_data(category, row), category, row)
   end
 
   def merge_test_data(statewide_test, yearly_data, category, row)
-    binding.pry
-    if statewide_test == 3 || 8
-      binding.pry
-      merge_test_by_grade(statewide_test, yearly_data, category, row[:timeframe])
+    if category.class == Fixnum
+      merge_test_by_grade(statewide_test, yearly_data, category, row[:timeframe].to_i)
     else
-      binding.pry
-      merge_test_by_race(statewide_test, yearly_data, category, row[:timeframe])
+      merge_test_by_race(statewide_test, yearly_data, category, row[:timeframe], row[:race_ethnicity])
     end
   end
 
-  def merge_test_by_race(object_info, row)
-  #   binding.pry
-  #   if object_info[:object].by_race.has_key?([object_info[:category]][row[:timeframe]])
-  #     binding.pry
-  #      object_info[:object].by_race[object_info[:category]][row][:timeframe]].merge!([row]:category]][object_info[:row][:timeframe]])
-  #      binding.pry
-  #   elsif object_info[:object].by_race.has_key?([object_info[:category]])
-  #     binding.pry
-  #      object_info[:object].by_race[object_info[:category]].merge!([object_info[:category]])
-  #      binding.pry
-  #   else
-  #     binding.pry
-  #     object_info[:object].by_race.merge!(object_info)
-  #   end
+  def merge_test_by_race(statewide_test, yearly_data, category, timeframe, race_ethnicity)
+    if statewide_test.by_race.has_key?(race_ethnicity)
+      if statewide_test.by_race[race_ethnicity].has_key?(timeframe)
+        statewide_test.by_race[race_ethnicity][timeframe].merge!(yearly_data[race_ethnicity][timeframe])
+      else
+        statewide_test.by_race[race_ethnicity].merge!(yearly_data[race_ethnicity])
+      end
+    else
+      statewide_test.by_race.merge!(yearly_data)
+    end
   end
 
   def merge_test_by_grade(statewide_test, yearly_data, category, timeframe)
-    binding.pry
-    if statewide_test.by_grade.has_key?([category][timeframe])
-      binding.pry
-       statewide_test.by_grade[category][timeframe].merge!(yearly_data[category][timeframe])
-       binding.pry
-    elsif statewide_test.by_grade.has_key?([category])
-      binding.pry
-       statewide_test.by_grade[category].merge!(yearly_data[category])
+    if statewide_test.by_grade.has_key?(category)
+      if statewide_test.by_grade[category].has_key?(timeframe)
+        statewide_test.by_grade[category][timeframe].merge!(yearly_data[category][timeframe])
+      else
+        statewide_test.by_grade[category].merge!(yearly_data[category])
+      end
     else
-      binding.pry
       statewide_test.by_grade.merge!(yearly_data)
     end
   end

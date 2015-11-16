@@ -15,7 +15,6 @@ class EnrollmentFormatterTest < Minitest::Test
               :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
               }
             }
-          }
   end
 
   def test_creates_sub_hash_year_percent_for_single_line

@@ -9,7 +9,7 @@ class EnrollmentRepositoryTest < Minitest::Test
   def input
     csv = CSVParser.new({:enrollment => {
                 :kindergarten => "./data/kindergartners_test_file.csv",
-                :high_school_graduation => "./data/hs_grad_test_file.csv" 
+                :high_school_graduation => "./data/hs_grad_test_file.csv"
                }
            })
     csv.parsed_csv
@@ -18,7 +18,6 @@ class EnrollmentRepositoryTest < Minitest::Test
   def test_repo_stores_object_name
     er = EnrollmentRepository.new
     er.load_data(input)
-    binding.pry
     assert_equal "ACADEMY 20", er.enrollments[0].name
   end
 
