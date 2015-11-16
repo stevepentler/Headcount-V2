@@ -5,9 +5,18 @@ class StatewideTestFormatter
 
   def yearly_data(category, row)
     if category.class == Fixnum
+      category = category_reformat(category)
       sub_hash = {category => {row[:timeframe].to_i => {row[:score] => row[:data].to_f.round(3)}}}
     else
       sub_hash = {row[:race_ethnicity] => {row[:timeframe] => {category => row[:data].to_f.round(3)}}}
+    end
+  end
+
+  def category_reformat(category)
+    if category == :third_grade
+      category = 3
+    elsif category == :eigth_grade
+      category = 8
     end
   end
 
