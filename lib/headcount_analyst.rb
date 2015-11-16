@@ -90,10 +90,6 @@ class HeadcountAnalyst
   end
 end
 
-
-
-
-
       #bring in district as {:for => "STATEWIDE"}
       #set holder = ALL DISTRICTS - "COLORADO"
       #iterate through set_holder
@@ -105,14 +101,8 @@ end
 
       #enrollments.each do |enrollment|
         #if  enrollment.name != "Colorado"
-
       #ene
     #end
-
-
-
-
-
 #     end
 #   end
 # end
