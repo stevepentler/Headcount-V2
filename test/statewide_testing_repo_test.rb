@@ -22,6 +22,7 @@ class StatewideRepositoryTest < Minitest::Test
   def test_repo_stores_object_name
     er = StatewideTestRepository.new
     er.load_data(input)
+    binding.pry
     assert_equal "COLORADO", er.statewide_tests[0].name
   end
 
