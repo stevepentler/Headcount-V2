@@ -5,17 +5,22 @@ class StatewideTestFormatter
 
   def yearly_data(category, row)
     if category.class == Fixnum
-      sub_hash = {category => {row[:timeframe].to_i => {row[:score] => row[:data].to_f.round(3)}}}
+      sub_hash = {category => {row[:timeframe].to_i => {row[:score].downcase.to_sym => row[:data].to_f.round(3)}}}
     else
-      sub_hash = {row[:race_ethnicity] => {row[:timeframe] => {category => row[:data].to_f.round(3)}}}
+      # row[:race_ethnicity] = :hawaiian_pacific_islander if row[:race_ethnicity] == "Hawaiian/Pacific Islander"
+      sub_hash = {format_race(row) => {row[:timeframe].to_i => {category => row[:data].to_f.round(3)}}}
     end
   end
 
-  def category_reformat(category)
-    if category == :third_grade
-      category = 3
-    elsif category == :eigth_grade
-      category = 8
+  def format_subject(row)
+    row[:score].downcase.to_sym
+  end
+
+  def format_race(row)
+    if row[:race_ethnicity] == "Hawaiian/Pacific Islander"
+      :hawaiian_pacific_islander
+    else
+      row[:race_ethnicity].downcase.split.join('_').to_sym
     end
   end
 
@@ -33,7 +38,7 @@ class StatewideTestFormatter
     if category.class == Fixnum
       merge_test_by_grade(statewide_test, yearly_data, category, row[:timeframe].to_i)
     else
-      merge_test_by_race(statewide_test, yearly_data, category, row[:timeframe], row[:race_ethnicity])
+      merge_test_by_race(statewide_test, yearly_data, category, row[:timeframe].to_i, format_race(row))
     end
   end
 

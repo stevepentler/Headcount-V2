@@ -18,14 +18,25 @@
 #             }
 #   end
 
+<<<<<<< HEAD
 #   def test_top_statewide_growth_one_year_by_subject
 #     st = StatewideTestingAnalysis.new
 #     assert_equal ["district_name", 123], st.statewide_test_year_over_year_growth(grade: 3, subject: :math)
 #   end 
 
+=======
+  def test_top_statewide_growth_one_year_by_subject
+    st = StatewideTestingAnalysis.new
+    assert_equal ["district_name", 123], st.statewide_test_year_over_year_growth(grade: 3, subject: :math)
+  end
+>>>>>>> fe5e1332d66057b51f8666847e605ce30b6d28b5
 
 
 
 
+<<<<<<< HEAD
 # end 
+=======
+>>>>>>> fe5e1332d66057b51f8666847e605ce30b6d28b5
 
+end

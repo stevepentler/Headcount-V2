@@ -2,8 +2,6 @@ class StatewideTestingAnalysis
 
   include KeywordParser
 
-  def top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
-
     if argument = (subject: :math)
       #raise InsufficientInformationError: "A grade must be provided to answer this question"
     elsif argument = (grade:, subject: :math)
@@ -57,5 +55,4 @@ class StatewideTestingAnalysis
   end
 
 end 
-
 
