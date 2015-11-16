@@ -4,7 +4,11 @@ require 'pry'
 class EnrollmentFormatter
 
   def yearly_data(row)
-    sub_hash = {row[:timeframe] => row[:data].to_f.round(3)}
+    sub_hash = {row[:timeframe].to_i => truncate(row[:data].to_f)}
+  end
+
+  def truncate(float)
+    (float * 1000).floor / 1000.to_f
   end
 
   def district_yearly_data(category, row)

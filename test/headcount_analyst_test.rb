@@ -8,7 +8,7 @@ class HeadcountAnalystTest < Minitest::Test
 
   def district_repo
     dr = DistrictRepository.new
-    dr.load_csv({
+    dr.load_data({
      :enrollment => {
      :kindergarten => "./data/kindergartners_test_file.csv",
      :high_school_graduation => './data/hs_grad_test_file.csv'}})

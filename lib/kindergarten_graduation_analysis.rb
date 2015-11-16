@@ -1,7 +1,7 @@
-require 'kindergarten_analysis'
-require 'graduation_analysis'
-require 'enrollment_repo'
-require 'keyword_parser_module'
+require_relative 'kindergarten_analysis'
+require_relative 'graduation_analysis'
+require_relative 'enrollment_repo'
+require_relative 'keyword_parser_module'
 
 class KindergartenGraduationAnalysis
 
@@ -50,6 +50,7 @@ class KindergartenGraduationAnalysis
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
     if district.has_key?(:for) && district[:for] == "STATEWIDE"
+      
       statewide_districts(district)
     elsif district.has_key?(:across)
       across_districts(district)

@@ -1,4 +1,4 @@
-require 'enrollment_formatter'
+require_relative 'enrollment_formatter'
 require 'pry'
 
 class EnrollmentRepository
@@ -10,7 +10,9 @@ class EnrollmentRepository
     @enrollment_formatter = EnrollmentFormatter.new
   end
 
-  def load_data(parsed_csv)
+  def load_data(csv_paths)
+    csv_parser = CSVParser.new(csv_paths) 
+    parsed_csv = csv_parser.parsed_csv
     enrollments_csv = parsed_csv[:enrollment]
     district_governor(enrollments_csv)
   end

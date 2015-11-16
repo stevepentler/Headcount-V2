@@ -12,12 +12,12 @@ class DistrictRepository
     @parsed_csv = nil
   end
 
-  def load_csv(csv_paths)
+  def load_data(csv_paths)
     csv_parser = CSVParser.new(csv_paths) 
     @parsed_csv = csv_parser.parsed_csv
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)} #only using for district names
     @enrollment_repo = EnrollmentRepository.new
-    @enrollment_repo.load_data(@parsed_csv)
+    @enrollment_repo.load_data(csv_paths)
     create_data_enroll_link
   end
 

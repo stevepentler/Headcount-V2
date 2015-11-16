@@ -10,7 +10,28 @@ class StatewideTestingAnalysis
       #if grade != 3 || grade != 8
         #raise UnknownDataError: "#{grade:}" is not a known grade"
     elsif arguement = (grade: 3, subject: :math)
+
+
+
     #grade_parser(information)
+      #grade
+        #district (3)
+          #subject (math)
+            #years => value
+      statewide_tests.each do |test|
+        years = @by_grade[3].map do |year|
+          year[:math]
+        end
+        count = (years.count - 1)
+        yearly_growth = 0 
+        count.times do 
+          yearly_growth += (years[1] - years[0])
+          years.shift  
+        end 
+        averages << {test.name => (yearly_growth / count)}
+      end
+
+     
     #take in subject data for year 1, year 2, year 3
     #map through
     #((year 2 - year 1) + (year 3 - year 2))/2
@@ -36,3 +57,5 @@ class StatewideTestingAnalysis
   end
 
 end 
+
+

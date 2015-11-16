@@ -1,4 +1,4 @@
-require_relative 'district_repo'
+require_relative 'district_repository'
 
 class GraduationAnalysis
 
