@@ -1,4 +1,3 @@
-
 class District 
   attr_reader :name
   attr_accessor :enrollment, :testing

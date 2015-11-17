@@ -1,4 +1,4 @@
-require 'statewide_test_formatter'
+require_relative 'statewide_test_formatter'
 require 'pry'
 
 class StatewideTestRepository

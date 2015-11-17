@@ -1,4 +1,4 @@
-require 'kindergarten_graduation_analysis'
+require_relative 'kindergarten_graduation_analysis'
 
 class HeadcountAnalyst
 

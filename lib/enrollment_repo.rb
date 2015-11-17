@@ -1,4 +1,4 @@
-require 'enrollment_formatter'
+require_relative 'enrollment_formatter'
 require 'pry'
 
 class EnrollmentRepository
