@@ -31,7 +31,9 @@ class CSVParser
     handle = CSV.read(data_path, :headers => true, header_converters: :symbol)
     handle.each do |row|
       row_regulate(row)
-      data_rows << row
+      if row[:data].class == Float || row[:data].class == Fixnum
+        data_rows << row
+      end
     end
     data_rows
   end

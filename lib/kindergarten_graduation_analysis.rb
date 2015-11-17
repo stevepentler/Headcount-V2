@@ -43,14 +43,13 @@ class KindergartenGraduationAnalysis
 
   def kindergarten_participation_against_high_school_graduation(district)
     district = eliminate_key(district)
-    comparison = (kindergarten_participation_rate_variation(district, :against => "COLORADO") /
-      graduation_participation_rate_variation(district, :against => "COLORADO"))
-    truncate(comparison)
+      comparison = (kindergarten_participation_rate_variation(district, :against => "COLORADO") /
+      graduation_participation_rate_variation(district, :against => "COLORADO")).to_s
+    nan_solution(comparison)
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
     if district.has_key?(:for) && district[:for] == "STATEWIDE"
-
       statewide_districts(district)
     elsif district.has_key?(:across)
       across_districts(district)
@@ -87,6 +86,14 @@ class KindergartenGraduationAnalysis
         (comparison > 0.6 && comparison < 1.5) ? true : false
     end
     ((districts_in_range / select_districts.count) > 0.70) ? true : false
+  end
+
+  def nan_solution(comparison)
+    if comparison == "Nan"
+      0
+    else
+      truncate(comparison.to_f)
+    end
   end
 
   def truncate(float)
