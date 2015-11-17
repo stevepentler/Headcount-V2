@@ -1,58 +1,86 @@
+require 'district_repository'
 class StatewideTestingAnalysis
 
-  include KeywordParser
+  def initialize(district_repo)
+    @district_repo = district_repo
+  end 
 
-    if argument = (subject: :math)
-      #raise InsufficientInformationError: "A grade must be provided to answer this question"
-    elsif argument = (grade:, subject: :math)
-      #if grade != 3 || grade != 8
-        #raise UnknownDataError: "#{grade:}" is not a known grade"
-    elsif arguement = (grade: 3, subject: :math)
+  def top_statewide_test_year_over_year_growth(testing_categories)
+    input_error?(testing_categories)
 
-
-
-    #grade_parser(information)
-      #grade
-        #district (3)
-          #subject (math)
-            #years => value
-      statewide_tests.each do |test|
-        years = @by_grade[3].map do |year|
-          year[:math]
-        end
-        count = (years.count - 1)
-        yearly_growth = 0 
-        count.times do 
-          yearly_growth += (years[1] - years[0])
-          years.shift  
-        end 
-        averages << {test.name => (yearly_growth / count)}
-      end
-
-     
-    #take in subject data for year 1, year 2, year 3
-    #map through
-    #((year 2 - year 1) + (year 3 - year 2))/2
-    #returned array.sort.last 
-#method returns district name with growth integer (over n years)
-      #(sort_by if not in numerical order)
-    elsif argument = (grade: 3, top: 3, subject: :math)
-      #grade_parser(information)
-      #same method as above
-      #take last(# from top)
-    elsif argument = (grade: 3)
-      #grade_parser(information)
-      #iterate through each subject :math, :reading, :writing
-      #run same method as above for each 
-      #(assign index aka ranking to each item in index)???
-      #add all three rankings together for school and divide by 3???
-#method returns top district name for (:math_integer + :reading_integer + :writing_integer) / 3
-    elsif (grade: 8, :weighting => {:math = 0.5, :reading => 0.5, :writing => 0.0})
-#method returns top district for each subject in a grade and the growth rate across all 3
-      #
+    
+    if testing_categories.key?(:subject) ###find leading district for subject
+      output = subject_leader(testing_categories)
+    
 
 
+    elsif ###find leading district for grade
+      growth_ranking = []
+      @district_repo.statewide_testing.find_by_name(district).each do |district|
+        growth_ranking << [district, yearly_change(district)]
+      end 
+      growth_ranking.sort_by! {|district, growth| growth}
+      growth_ranking.last
+    
+
+
+    elsif testing_categories.has_key?(:top)
+      growth_ranking.last(testing_categories[:top]) 
+
+    
+
+    elsif testing_categories.has_key?(:weighting)
+      @district_repo.statewide_testing.find_by_name(district).each do |district|
+        weighted_growth_ranking << [district, yearly_change(district)]
+      end 
+    end
+
+  end 
+
+
+  def subject_leader(testing_categories)
+    scores_array = @district_repo.statewide_testing.----------map do |district|
+      [district.name, yearly_growth(testing_categories, name)]
+    scores_array.sort_by! {|district, growth| growth}
+    scores_array.last
+    end 
+  end 
+
+  def yearly_growth(input_array)
+    subtractions = []
+    if input_array.length >= 2 
+      subtractions << (input_array[1] - input_array[0])
+      input_array.shift
+    else 
+      subtractions.inject(:+) / subtractions.length
+    end 
+  end 
+
+  def input_error?(testing_categories)
+    unless testing_categories.keys.include?(:grade)
+      raise InsufficientInformationError,
+        "A grade must be provided to answer this question"
+    end 
+    unless testing_categories[:grade] == 3 || 8
+      raise UnknownDataError,
+      "#{testing_categories[:grade]} is not a known grade."
+    end 
+  end 
+
+  def determine_weighting(testing_categories)
+    unless testing_categories.has_key?(:weighting)
+      testing_categories[:weighting] = even_weighting
+    end 
   end
 
-end 
+  def combined_weights_equals_one?(testing_categories)
+    unless testing_categories[:weighting].values.inject(:+) == 1.0
+      raise InsufficientInformationError, 
+        "Weighted sum does not equal one"
+    end  
+  end  
 
+  def even_weighting
+    {math: 1.0/3, reading: 1.0/3, writing: 1.0/3}
+  end 
+end
