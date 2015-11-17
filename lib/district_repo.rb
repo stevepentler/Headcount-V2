@@ -6,18 +6,18 @@ require_relative 'enrollment_repo'
 class DistrictRepository
 
   attr_reader :districts, :parsed_csv, :enrollment_repo
-  
+
   def initialize
     @districts = []
     @parsed_csv = nil
   end
 
   def load_csv(csv_paths)
-    csv_parser = CSVParser.new(csv_paths) 
+    csv_parser = CSVParser.new(csv_paths)
     @parsed_csv = csv_parser.parsed_csv
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)} #only using for district names
     @enrollment_repo = EnrollmentRepository.new
-    @enrollment_repo.load_data(@parsed_csv)
+    @enrollment_repo.load_data(csv_paths)
     create_data_enroll_link
   end
 
@@ -35,13 +35,13 @@ class DistrictRepository
     end
   end
 
-  def empty?(parse)   
+  def empty?(parse)
     instantiate_districts(parse) if @districts.empty?
   end
 
   def instantiate_districts(parse)
     @districts << District.new(parse)
-  end 
+  end
 
   def find_by_name(name)
     @districts.find do |district|
@@ -55,4 +55,4 @@ class DistrictRepository
     end
     find_all
   end
-end 
+end

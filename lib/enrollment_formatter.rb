@@ -3,25 +3,49 @@ require 'pry'
 
 class EnrollmentFormatter
 
+  attr_reader :enrollments_hash
+
+  def initialize
+    @enrollments_hash = []
+  end
+
+  def district_governor(enrollments_csv)
+    enrollments_csv[:enrollment].each do |category, enrollment_rows|
+      enrollment_rows.each do |row|
+        if @enrollments_hash.empty?
+          district_yearly_data(category, row)
+        else
+          unique_enrollment?(category, row)
+        end
+      end
+    end
+  end
+
+  def unique_enrollment?(category, row)
+      if hash_find(row)
+        merge_enroll_data(hash_find(row), category, row)
+      else
+        district_yearly_data(category, row)
+      end
+  end
+
+  def hash_find(row)
+    @enrollments_hash.find {|enrollment| enrollment[:name] == row[:location]}
+  end
+
   def yearly_data(row)
     sub_hash = {row[:timeframe] => row[:data].to_f.round(3)}
   end
 
   def district_yearly_data(category, row)
-    enrollment = Enrollment.new({:name => row[:location]})
-    merge_enroll_data(enrollment, {category => yearly_data(row)})
-    enrollment
+    @enrollments_hash << {:name => row[:location], category => yearly_data(row)}
   end
 
-  def append_district_yearly_data(enrollment, category, row)
-    merge_enroll_data(enrollment, {category => yearly_data(row)})
-  end
-
-  def merge_enroll_data(enrollment, enroll_data)
-    if enroll_data.has_key?(:kindergarten)
-      enrollment.kindergarten_data.merge!(enroll_data[:kindergarten])
-    elsif enroll_data.has_key?(:high_school_graduation)
-      enrollment.graduation_data.merge!(enroll_data[:high_school_graduation])
+  def merge_enroll_data(enrollment, category, row)
+    if enrollment.has_key?(category)
+      enrollment[category].merge!(yearly_data(row))
+    else
+      enrollment.merge!({category => yearly_data(row)})
     end
   end
 end

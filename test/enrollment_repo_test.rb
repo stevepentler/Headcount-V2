@@ -7,12 +7,12 @@ require './lib/csv_parser'
 class EnrollmentRepositoryTest < Minitest::Test
 
   def input
-    csv = CSVParser.new({:enrollment => {
+    csv = {:enrollment => {
                 :kindergarten => "./data/kindergartners_test_file.csv",
                 :high_school_graduation => "./data/hs_grad_test_file.csv"
                }
-           })
-    csv.parsed_csv
+           }
+    csv
   end
 
   def test_repo_stores_object_name
