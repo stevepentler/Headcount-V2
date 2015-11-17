@@ -92,5 +92,5 @@ class KindergartenGraduationAnalysis
   def truncate(float)
     (float * 1000).floor / 1000.to_f
   end
-  
+
 end

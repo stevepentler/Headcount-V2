@@ -30,9 +30,7 @@ class DistrictRepository
 
   def unique_district?(parse)
     empty?(parse)
-    @districts.each do |district|
-      instantiate_districts(parse) if district.name != parse[:location]
-    end
+    instantiate_districts(parse) if find_by_name(parse[:location])
   end
 
   def empty?(parse)
