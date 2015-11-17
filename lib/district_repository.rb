@@ -13,7 +13,7 @@ class DistrictRepository
   end
 
   def load_data(csv_paths)
-    csv_parser = CSVParser.new(csv_paths) 
+    csv_parser = CSVParser.new(csv_paths)
     @parsed_csv = csv_parser.parsed_csv
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)} #only using for district names
     @enrollment_repo = EnrollmentRepository.new
