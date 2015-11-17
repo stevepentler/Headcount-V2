@@ -4,7 +4,7 @@ class Enrollment
 
   def initialize(enrollment_data)
     @name = enrollment_data[:name]
-    @kindergarten_data = enrollment_data[:kindergarten]
+    @kindergarten_data= enrollment_data[:kindergarten]
     @graduation_data = enrollment_data[:high_school_graduation]
   end
 
@@ -13,7 +13,7 @@ class Enrollment
   end
 
   def kindergarten_participation_in_year(year)
-    kindergarten_data[year]
+    truncate(kindergarten_data[year])
   end
 
   def graduation_rate_by_year
@@ -21,6 +21,11 @@ class Enrollment
   end
 
   def graduation_rate_in_year(year)
-    graduation_data[year]
+    truncate(graduation_data[year])
   end
+
+  def truncate(float)
+    (float * 1000).floor / 1000.to_f unless float == nil
+  end
+
 end

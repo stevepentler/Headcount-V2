@@ -7,7 +7,7 @@ require 'pry'
 class DistrictTest < Minitest::Test
 
   def load_data
-  ld = {:location => "ACADEMY 20", :timeframe => 2007, :dataformat => "Percent", :data => 0.39465}
+  ld = {:name => "ACADEMY 20", :timeframe => 2007, :dataformat => "Percent", :data => 0.39465}
   end
 
   def test_district_has_name

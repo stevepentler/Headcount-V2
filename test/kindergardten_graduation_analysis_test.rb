@@ -6,7 +6,7 @@ require './lib/district'
 
 class KindergartenGraduationAnalysisTest < Minitest::Test
 
-  def district_repo(dr)
+  def district_repo
     dr = DistrictRepository.new
     dr.load_data({
      :enrollment => {

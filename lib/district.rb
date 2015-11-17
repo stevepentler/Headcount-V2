@@ -3,7 +3,7 @@ class District
   attr_accessor :enrollment, :testing
 
   def initialize(district_data)
-    @name = district_data[:location]
+    @name = district_data[:name]
     @enrollment = nil
     @testing = nil
   end

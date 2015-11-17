@@ -21,6 +21,7 @@ class EnrollmentFormatter
     end
   end
 
+
   def unique_enrollment?(category, row)
       if hash_find(row)
         merge_enroll_data(hash_find(row), category, row)
@@ -38,7 +39,7 @@ class EnrollmentFormatter
   end
 
   def district_yearly_data(category, row)
-    @enrollments_hash << {:name => row[:location], category => yearly_data(row)}
+    @enrollments_hash << {:name => row[:location], category => (yearly_data(row))}
   end
 
   def merge_enroll_data(enrollment, category, row)
@@ -48,4 +49,7 @@ class EnrollmentFormatter
       enrollment.merge!({category => yearly_data(row)})
     end
   end
+
+
+
 end

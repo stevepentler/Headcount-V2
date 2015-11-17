@@ -30,7 +30,7 @@ class DistrictRepository
 
   def unique_district?(parse)
     empty?(parse)
-    instantiate_districts(parse) if find_by_name(parse[:location])
+    instantiate_districts(parse) if find_by_name(parse[:location]).nil?
   end
 
   def empty?(parse)
@@ -38,7 +38,7 @@ class DistrictRepository
   end
 
   def instantiate_districts(parse)
-    @districts << District.new(parse)
+    @districts << District.new({:name => parse[:location]})
   end
 
   def find_by_name(name)
