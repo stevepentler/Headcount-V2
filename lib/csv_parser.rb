@@ -30,10 +30,20 @@ class CSVParser
     data_rows = []
     handle = CSV.read(data_path, :headers => true, header_converters: :symbol)
     handle.each do |row|
-      row[:location].upcase!
+      row_regulate(row)
       data_rows << row
     end
     data_rows
+  end
+
+  def row_regulate(row)
+    row[:location].upcase!
+    row[:data] = truncate(row[:data].to_f)
+    row[:timeframe] = row[:timeframe].to_i
+  end
+
+  def truncate(float)
+    (float * 1000).floor / 1000.to_f
   end
 
 end

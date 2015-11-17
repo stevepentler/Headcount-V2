@@ -3,17 +3,57 @@ require 'pry'
 
 class StatewideTestFormatter
 
-  def yearly_data(category, row)
-    if category.class == Fixnum
-      sub_hash = {category => {row[:timeframe].to_i => {row[:score].downcase.to_sym => row[:data].to_f.round(3)}}}
-    else
-      # row[:race_ethnicity] = :hawaiian_pacific_islander if row[:race_ethnicity] == "Hawaiian/Pacific Islander"
-      sub_hash = {format_race(row) => {row[:timeframe].to_i => {category => row[:data].to_f.round(3)}}}
+  attr_reader :statewide_tests_hash
+
+  def initialize
+    @statewide_tests_hash = []
+  end
+
+  def district_governor(statewide_testing_csv)
+    statewide_testing_csv[:statewide_testing].each do |category, test_rows|
+      test_rows.each do |row|
+        if @statewide_tests_hash.empty?
+          district_yearly_data(category, row)
+        else
+          unique_test?(category, row)
+        end
+      end
     end
   end
 
-  def format_subject(row)
-    row[:score].downcase.to_sym
+  def unique_test?(category, row)
+    if hash_find(row)
+      merge_test_data(hash_find(row), category, row)
+    else
+      district_yearly_data(category, row)
+    end
+  end
+
+  def hash_find(row)
+    @statewide_tests_hash.find {|state_test| state_test[:name] == row[:location]}
+  end
+
+  def yearly_data(category, row)
+    sub_category = sub_category_format(category, row)
+    if sub_category.class == Fixnum
+      sub_hash = {row[:timeframe] => {row[:score].downcase.to_sym => row[:data]}}
+    else
+      sub_hash = {row[:timeframe] => {category => row[:data]}}
+    end
+  end
+
+  def sub_category_format(category, row)
+    if category == :third_grade || category == :eighth_grade
+      category = grade_format(category)
+    else
+      category = format_race(row)
+    end
+  end
+
+  def grade_format(category)
+    category = 3 if category == :third_grade
+    category = 8 if category == :eighth_grade
+    category
   end
 
   def format_race(row)
@@ -25,44 +65,19 @@ class StatewideTestFormatter
   end
 
   def district_yearly_data(category, row)
-    statewide_test = StatewideTest.new({:name => row[:location]})
-    append_district_yearly_data(statewide_test, category, row)
-    statewide_test
+    @statewide_tests_hash << {:name => row[:location], sub_category_format(category, row) => yearly_data(category, row)}
   end
 
-  def append_district_yearly_data(statewide_test, category, row)
-    merge_test_data(statewide_test, yearly_data(category, row), category, row)
-  end
-
-  def merge_test_data(statewide_test, yearly_data, category, row)
-    if category.class == Fixnum
-      merge_test_by_grade(statewide_test, yearly_data, category, row[:timeframe].to_i)
-    else
-      merge_test_by_race(statewide_test, yearly_data, category, row[:timeframe].to_i, format_race(row))
-    end
-  end
-
-  def merge_test_by_race(statewide_test, yearly_data, category, timeframe, race_ethnicity)
-    if statewide_test.by_race.has_key?(race_ethnicity)
-      if statewide_test.by_race[race_ethnicity].has_key?(timeframe)
-        statewide_test.by_race[race_ethnicity][timeframe].merge!(yearly_data[race_ethnicity][timeframe])
+  def merge_test_data(statewide_test, category, row)
+    sub_category = sub_category_format(category, row)
+    if statewide_test.has_key?(sub_category)
+      if statewide_test[sub_category].has_key?(row[:timeframe])
+        statewide_test[sub_category][row[:timeframe]].merge!(yearly_data(category, row)[row[:timeframe]])
       else
-        statewide_test.by_race[race_ethnicity].merge!(yearly_data[race_ethnicity])
+        statewide_test[sub_category].merge!(yearly_data(category, row))
       end
     else
-      statewide_test.by_race.merge!(yearly_data)
-    end
-  end
-
-  def merge_test_by_grade(statewide_test, yearly_data, category, timeframe)
-    if statewide_test.by_grade.has_key?(category)
-      if statewide_test.by_grade[category].has_key?(timeframe)
-        statewide_test.by_grade[category][timeframe].merge!(yearly_data[category][timeframe])
-      else
-        statewide_test.by_grade[category].merge!(yearly_data[category])
-      end
-    else
-      statewide_test.by_grade.merge!(yearly_data)
+      statewide_test.merge!({sub_category => yearly_data(category, row)})
     end
   end
 end

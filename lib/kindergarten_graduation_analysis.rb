@@ -44,13 +44,13 @@ class KindergartenGraduationAnalysis
   def kindergarten_participation_against_high_school_graduation(district)
     district = eliminate_key(district)
     comparison = (kindergarten_participation_rate_variation(district, :against => "COLORADO") /
-      graduation_participation_rate_variation(district, :against => "COLORADO")).round(3)
-    comparison
+      graduation_participation_rate_variation(district, :against => "COLORADO"))
+    truncate(comparison)
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
     if district.has_key?(:for) && district[:for] == "STATEWIDE"
-      
+
       statewide_districts(district)
     elsif district.has_key?(:across)
       across_districts(district)
@@ -65,7 +65,7 @@ class KindergartenGraduationAnalysis
       enrollment.name == "COLORADO"
     end
     correlation_boolean(districts_minus_colorado)
-  end 
+  end
 
   def across_districts(districts)
     district = eliminate_key(districts)
@@ -73,13 +73,13 @@ class KindergartenGraduationAnalysis
       enrollment if district.any? {|district| enrollment.name == district}
     end
     correlation_boolean(districts_indicated.compact!)
-  end 
+  end
 
   def single_district(district)
     district = eliminate_key(district)
     comparison = kindergarten_participation_against_high_school_graduation(district)
     (comparison > 0.6 && comparison < 1.5) ? true : false
-  end 
+  end
 
   def correlation_boolean(select_districts)
       districts_in_range = select_districts.count do |enrollment|
@@ -87,5 +87,10 @@ class KindergartenGraduationAnalysis
         (comparison > 0.6 && comparison < 1.5) ? true : false
     end
     ((districts_in_range / select_districts.count) > 0.70) ? true : false
-  end 
+  end
+
+  def truncate(float)
+    (float * 1000).floor / 1000.to_f
+  end
+  
 end

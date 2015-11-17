@@ -13,18 +13,18 @@ class KindergartenAnalysisTest < Minitest::Test
      :kindergarten => "./data/kindergartners_test_file.csv",
      :high_school_graduation => './data/hs_grad_test_file.csv'}})
     dr
-  end 
+  end
 
   def test_district_kindergarten_average_single_value
     dr = district_repo
     ka = KindergartenAnalysis.new(dr)
     assert_equal 1.2, ka.kindergarten_average("JOHNSTOWN-MILLIKEN RE-5J")
-  end 
+  end
 
   def test_kindergarten_average_multiple_values
     dr = district_repo
     ka = KindergartenAnalysis.new(dr)
-    assert_equal 0.373, ka.kindergarten_average("ACADEMY 20")
+    assert_equal 0.372, ka.kindergarten_average("ACADEMY 20")
   end
 
   def test_kindergarten_average_statwide_value
@@ -35,40 +35,40 @@ class KindergartenAnalysisTest < Minitest::Test
 
   def test_kindergarden_state_comparison_greater_than_one
     dr = district_repo
-    ka = KindergartenAnalysis.new(dr)    
+    ka = KindergartenAnalysis.new(dr)
     assert_equal 2.264, ka.kindergarten_state_comparison("JOHNSTOWN-MILLIKEN RE-5J", "COLORADO")
-  end 
+  end
 
   def test_kindergarden_state_comparison_less_than_one
     dr = district_repo
-    ka = KindergartenAnalysis.new(dr)    
-    assert_equal 0.704, ka.kindergarten_state_comparison("ACADEMY 20", "COLORADO")
+    ka = KindergartenAnalysis.new(dr)
+    assert_equal 0.701, ka.kindergarten_state_comparison("ACADEMY 20", "COLORADO")
   end
 
   def test_kindergarten_participation_rate_variation_trend_count_for_three_values
     dr = district_repo
-    ka = KindergartenAnalysis.new(dr)    
+    ka = KindergartenAnalysis.new(dr)
     assert_equal 3, ka.kindergarten_rate_variation_trend("ADAMS COUNTY 14", "COLORADO").count
   end
 
   def test_kindergarten_participation_rate_variation_trend
     dr = district_repo
-    ka = KindergartenAnalysis.new(dr)    
-    expected_hash = {"2007"=>0.775, "2006"=>0.869, "2005"=>1.079}
+    ka = KindergartenAnalysis.new(dr)
+    expected_hash = {2007=>0.775, 2006=>0.869, 2005=>1.079}
     assert_equal expected_hash, ka.kindergarten_rate_variation_trend("ADAMS COUNTY 14", "COLORADO")
   end
 
   def test_kindergarten_participation_rate_variation_trend
     dr = district_repo
-    ka = KindergartenAnalysis.new(dr)    
-    expected_hash = {"2007"=>0.781, "2006"=>0.828, "2005"=>nil}
+    ka = KindergartenAnalysis.new(dr)
+    expected_hash = {2007=>0.782, 2006=>0.83, 2005=>nil}
     assert_equal expected_hash, ka.kindergarten_rate_variation_trend("ADAMS COUNTY 14", "ACADEMY 20")
   end
 
   def test_kindergarten_participation_rate_variation_trend_for_no_overlapping_years
     dr = district_repo
-    ka = KindergartenAnalysis.new(dr)  
-    hash = {"2007"=>nil, "2006"=>nil}
+    ka = KindergartenAnalysis.new(dr)
+    hash = {2007=>nil, 2006=>nil}
     assert_equal hash, ka.kindergarten_rate_variation_trend("ACADEMY 20", "JOHNSTOWN-MILLIKEN RE-5J")
   end
 end

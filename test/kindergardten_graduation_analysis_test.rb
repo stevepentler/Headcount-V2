@@ -24,7 +24,7 @@ class KindergartenGraduationAnalysisTest < Minitest::Test
   def test_district_kindergarten_average_multiple_values
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 0.373, ha.district_kindergarten_average("ACADEMY 20")
+    assert_equal 0.372, ha.district_kindergarten_average("ACADEMY 20")
   end
 
   def test_district_kindergarten_average_statwide_value
@@ -42,13 +42,13 @@ class KindergartenGraduationAnalysisTest < Minitest::Test
   def test_kindergarden_state_comparison_less_than_one
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 0.704, ha.kindergarten_participation_rate_variation("ACADEMY 20", :against => "COLORADO")
+    assert_equal 0.701, ha.kindergarten_participation_rate_variation("ACADEMY 20", :against => "COLORADO")
   end
 
   def test_kindergarten_participation_rate_variation_trend
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    expected_hash = {"2007"=>0.992, "2006"=>1.05}
+    expected_hash = {2007=>0.992, 2006=>1.05}
     assert_equal expected_hash, ha.kindergarten_participation_rate_variation_trend("ACADEMY 20", :against => "COLORADO")
   end
 
@@ -61,19 +61,19 @@ class KindergartenGraduationAnalysisTest < Minitest::Test
   def test_kg_hs_comparison_for_single_district
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 0.578 , ha.kindergarten_participation_against_high_school_graduation( "ACADEMY 20")
+    assert_equal 0.575 , ha.kindergarten_participation_against_high_school_graduation( "ACADEMY 20")
   end
 
   def test_kg_hs_comparison_for_single_district_part_two
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 1.88 , ha.kindergarten_participation_against_high_school_graduation("JOHNSTOWN-MILLIKEN RE-5J")
+    assert_equal 1.878 , ha.kindergarten_participation_against_high_school_graduation("JOHNSTOWN-MILLIKEN RE-5J")
   end
 
   def test_kg_hs_comparison_for_mismatched_years
     dr = district_repo
     ha = HeadcountAnalyst.new(dr)
-    assert_equal 0.635, ha.kindergarten_participation_against_high_school_graduation("ADAMS COUNTY 14")
+    assert_equal 0.632, ha.kindergarten_participation_against_high_school_graduation("ADAMS COUNTY 14")
   end
 
   def test_kg_hs_correlation_returns_true_for_district_in_range
