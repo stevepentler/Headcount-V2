@@ -1,7 +1,7 @@
 require_relative 'statewide_test_formatter'
 require 'pry'
 
-class StatewideTestRepository
+class StatewideTestingRepository
 
   attr_reader :statewide_tests
 
@@ -11,15 +11,17 @@ class StatewideTestRepository
   end
 
   def load_data(parsed_csv)
-    csv_parser = CSVParser.new(parsed_csv)
-    parsed_csv = csv_parser.parsed_csv
-    @statewide_test_formatter.district_governor(parsed_csv)
-    create_statewide_testing_objects
+    if parsed_csv.has_key?(:statewide_testing)
+      csv_parser = CSVParser.new(parsed_csv)
+      parsed_csv = csv_parser.parsed_csv
+      @statewide_test_formatter.district_governor(parsed_csv)
+      create_statewide_testing_objects
+    end
   end
 
   def create_statewide_testing_objects
-    @statewide_test_formatter.statewide_tests_hash.each do |enrollment|
-      @statewide_tests << Enrollment.new(enrollment)
+    @statewide_test_formatter.statewide_tests_hash.each do |test|
+      @statewide_tests << StatewideTest.new(test)
     end
   end
 

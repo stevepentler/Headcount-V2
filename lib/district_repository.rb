@@ -2,6 +2,7 @@ require 'csv'
 require_relative 'district'
 require_relative 'csv_parser'
 require_relative 'enrollment_repo'
+require_relative 'statewide_testing_repo'
 
 class DistrictRepository
 
@@ -18,6 +19,8 @@ class DistrictRepository
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)} #only using for district names
     @enrollment_repo = EnrollmentRepository.new
     @enrollment_repo.load_data(csv_paths)
+    @statewide_test_repo = StatewideTestingRepository.new
+    @statewide_test_repo.load_data(csv_paths)
     create_data_enroll_link
   end
 
@@ -25,6 +28,8 @@ class DistrictRepository
     @districts.each do |district|
       temp = @enrollment_repo.find_by_name(district.name)
       district.enrollment = temp
+      temp_test = @statewide_test_repo.find_by_name(district.name)
+      district.statewide_testing = temp_test
     end
   end
 

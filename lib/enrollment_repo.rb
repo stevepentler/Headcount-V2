@@ -11,10 +11,12 @@ class EnrollmentRepository
   end
 
   def load_data(parsed_csv)
-    csv_parser = CSVParser.new(parsed_csv)
-    parsed_csv = csv_parser.parsed_csv
-    @enrollment_formatter.district_governor(parsed_csv)
-    create_enroll_objects
+    if parsed_csv.has_key?(:enrollment)
+      csv_parser = CSVParser.new(parsed_csv)
+      parsed_csv = csv_parser.parsed_csv
+      @enrollment_formatter.district_governor(parsed_csv)
+      create_enroll_objects
+    end
   end
 
   def create_enroll_objects
