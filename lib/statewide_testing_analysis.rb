@@ -15,6 +15,12 @@ class StatewideTestingAnalysis
         top = testing_categories[:top]
       end
       (district_subject_growths(testing_categories).max(top) {|pair| pair[1]})
+    else
+      change = @statewide_tests.map do |state_test|
+        if state_test.name != "COLORADO"
+         district_growths_across_subjects(testing_categories, state_test)
+        end
+      end
     end 
   end 
 
@@ -27,8 +33,13 @@ class StatewideTestingAnalysis
     change.compact
   end
 
-  def district_growths_across_subjects(testing_categories)
-    testing_categories[:subject]
+  def district_growths_across_subjects(testing_categories, state_test)
+    subjects = [:math, :writing, :reading]
+    values = subjects.map do |single_subject|
+      testing_categories[:subject] = single_subject
+      {single_subject => (find_growth_for_subjects(testing_categories, state_test))}
+    end
+    [state_test.name, values.compact]
   end
 
   def find_growth_for_subjects(testing_categories, state_test)
