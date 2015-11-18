@@ -4,32 +4,29 @@ class StatewideTestingAnalysis
 
   def initialize(district_repo)
     @district_repo = district_repo
-    @statewide_test = StatewideTest.new(sta)
+    @statewide_tests = @district_repo.statewide_test_repo.statewide_tests
   end 
 
   def top_statewide_test_year_over_year_growth(testing_categories)
-    binding.pry
     input_error?(testing_categories)
 
     if testing_categories.key?(:subject) ###find leading district for subject
-      
-      output = subject_leader(testing_categories)
+      district_subject_growths(testing_categories).max {|pair| pair[1]}
     end 
   end 
 
-  def proficient_by_grade(grade)
-    if grade == 3 || grade == 8
-      statewide_test_data[grade]
-    else 
-      raise "UnknownDataError"
-    end 
-  end
 
-  def blah
-     @district_repo.statewide_testing_repo.statewide_tests.each do |test|
-      array = test.proficient_by_grade(grade).to_a
-      array.max {|year| year[:math]}
+  def district_subject_growths(testing_categories)
+    change = @statewide_tests.map do |state_test|
+      array = state_test.proficient_by_grade(testing_categories[:grade]).to_a
+      first = array[0][1][testing_categories[:subject]]
+      last = array[-1][1][testing_categories[:subject]]
+      [state_test.name, truncate(last - first)]
     end
+ end
+
+  def truncate(float)
+    (float * 1000).floor / 1000.to_f
   end
 
   # def subject_leader(testing_categories)

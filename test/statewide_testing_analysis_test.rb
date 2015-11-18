@@ -3,12 +3,17 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/statewide_testing_analysis'
 require './lib/district_repository'
+require './lib/statewide_testing_repo'
 
 class StatewideTestingAnalysisTest < MiniTest::Test
 
   def district_repo
     dr = DistrictRepository.new
     dr.load_data({
+          :enrollment => {
+              :kindergarten => "./data/kindergartners_test_file.csv",
+              :high_school_graduation => "./data/hs_grad_test_file.csv"
+              },
           :statewide_testing => {
               :third_grade => "./data/3rd_grade_TCAP_test_file.csv",
               :eighth_grade => "./data/8th_grade_TCAP_test_file.csv",
@@ -18,7 +23,7 @@ class StatewideTestingAnalysisTest < MiniTest::Test
               }})
     dr
   end
-  
+
   def test_raises_error_without_grade
     st = StatewideTestingAnalysis.new(district_repo)
     assert_raises "InsufficientInformationError: A grade must be provided to answer this question" do
@@ -26,7 +31,7 @@ class StatewideTestingAnalysisTest < MiniTest::Test
     end 
   end
 
-  def test_raises_error_without_grade
+  def test_raises_error_with_invalid_grade
     st = StatewideTestingAnalysis.new(district_repo)
     assert_raises "UnknownDataError: 9 is not a known grade" do
       st.top_statewide_test_year_over_year_growth(grade: 9, subject: :math)
@@ -38,71 +43,76 @@ class StatewideTestingAnalysisTest < MiniTest::Test
     assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).class
   end 
 
-  def test_find_single_leader_returns_single_element
+  def test_find_single_leader_returns_array_with_two_elements
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal 1, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).count
+    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).count
   end 
 
   def test_find_single_leader_district_array_name_first
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal String, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).first.first.class
+    assert_equal String, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).first.class
   end 
 
   def test_find_single_leader_district_array_value_last
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal Float, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).first.last.class
+    assert_equal Float, st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).last.class
   end 
 
   def test_find_single_leader
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["district_name", 123], st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.026], st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
   end
 
-  def test_across_all_subjects_returns_array
+  def test_find_single_leader_different_grade_and_subject
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3).class
-  end 
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.084], st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing)
+  end
 
-  def test_across_all_subjects_returns_single_element
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal 1, st.top_statewide_test_year_over_year_growth(grade: 3).count
-  end 
+  # def test_across_all_subjects_returns_array
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3).class
+  # end 
 
-  def test_across_all_subjects_array_name_first
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal String, st.top_statewide_test_year_over_year_growth(grade: 3).first.first.class
-  end 
+  # def test_across_all_subjects_returns_single_element
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal 1, st.top_statewide_test_year_over_year_growth(grade: 3).count
+  # end 
 
-  def test_across_all_subjects_array_value_last
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal Float, st.top_statewide_test_year_over_year_growth(grade: 3).first.last.class
-  end 
+  # def test_across_all_subjects_array_name_first
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal String, st.top_statewide_test_year_over_year_growth(grade: 3).first.first.class
+  # end 
 
-  def test_across_all_subjects_single_leader
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["District_name", 123], st.top_statewide_test_year_over_year_growth(grade: 3)
-  end 
+  # def test_across_all_subjects_array_value_last
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal Float, st.top_statewide_test_year_over_year_growth(grade: 3).first.last.class
+  # end 
 
-  def test_find_multiple_leaders_returns_array
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).class
-  end 
+  # def test_across_all_subjects_single_leader
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal ["District_name", 123], st.top_statewide_test_year_over_year_growth(grade: 3)
+  # end 
 
-  def test_find_multiple_leaders_returns_correct_count_of_three_elements
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal 3, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).count
-    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
-  end 
+  # def test_find_multiple_leaders_returns_array
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).class
+  # end 
 
-  def test_find_multiple_leaders_returns_correct_count_of_two_elements
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
-  end 
+  # def test_find_multiple_leaders_returns_correct_count_of_three_elements
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal 3, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).count
+  #   assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
+  # end 
 
-  def test_find_multiple_leaders_returns_correct_count_when_top_greater_than_elements
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert (st.top_statewide_test_year_over_year_growth(grade: 3, top: 5000).count > 1)
-  end 
+  # def test_find_multiple_leaders_returns_correct_count_of_two_elements
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
+  # end 
+
+  # def test_find_multiple_leaders_returns_correct_count_when_top_greater_than_elements
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert (st.top_statewide_test_year_over_year_growth(grade: 3, top: 5000).count > 1)
+  # end 
 
 
 end

@@ -6,7 +6,7 @@ require_relative 'statewide_testing_repo'
 
 class DistrictRepository
 
-  attr_reader :districts, :parsed_csv, :enrollment_repo
+  attr_reader :districts, :parsed_csv, :enrollment_repo, :statewide_test_repo
 
   def initialize
     @districts = []
