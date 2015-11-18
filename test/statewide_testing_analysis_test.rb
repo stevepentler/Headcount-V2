@@ -68,46 +68,46 @@ class StatewideTestingAnalysisTest < MiniTest::Test
     assert_equal ["ADAMS-ARAPAHOE 28J", 0.014], st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing)
   end
 
-  # def test_across_all_subjects_returns_array
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3).class
-  # end 
+  def test_across_all_subjects_returns_array
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3).class
+  end 
 
-  # def test_across_all_subjects_returns_single_element
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal 1, st.top_statewide_test_year_over_year_growth(grade: 3).count
-  # end 
+  def test_across_all_subjects_returns_single_element
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3).count
+  end 
 
-  # def test_across_all_subjects_array_name_first
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal String, st.top_statewide_test_year_over_year_growth(grade: 3).first.first.class
-  # end 
+  def test_across_all_subjects_array_name_first
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal String, st.top_statewide_test_year_over_year_growth(grade: 3).first.class
+  end 
 
-  # def test_across_all_subjects_array_value_last
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal Float, st.top_statewide_test_year_over_year_growth(grade: 3).first.last.class
-  # end 
+  def test_across_all_subjects_array_value_last
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal Float, st.top_statewide_test_year_over_year_growth(grade: 3).last.class
+  end 
 
-  # def test_across_all_subjects_single_leader
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal ["District_name", 123], st.top_statewide_test_year_over_year_growth(grade: 3)
-  # end 
+  def test_across_all_subjects_single_leader
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal ["ACADEMY 20", -0.006], st.top_statewide_test_year_over_year_growth(grade: 3)
+  end 
 
-  # def test_find_multiple_leaders_returns_array
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).class
-  # end 
+  def test_find_multiple_leaders_returns_array
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal Array, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).class
+  end 
 
-  # def test_find_multiple_leaders_returns_correct_count_of_three_elements
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal 3, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).count
-  #   assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
-  # end 
+  def test_find_multiple_leaders_returns_correct_count_of_three_elements
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 3, st.top_statewide_test_year_over_year_growth(grade: 3, top: 3).count
+    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
+  end 
 
-  # def test_find_multiple_leaders_returns_correct_count_of_two_elements
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
-  # end 
+  def test_find_multiple_leaders_returns_correct_count_of_two_elements
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
+  end 
 
   def test_find_multiple_leaders_across_subject
     st = StatewideTestingAnalysis.new(district_repo)
@@ -117,6 +117,11 @@ class StatewideTestingAnalysisTest < MiniTest::Test
   def test_find_multiple_leaders
     st = StatewideTestingAnalysis.new(district_repo)
     assert_equal [["ACADEMY 20", 0.002], ["ADAMS-ARAPAHOE 28J", 0.014]], st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing, top: 2)
+  end 
+
+  def test_unequal_weighting
+     st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal ["ACADEMY 20", -0.005], st.top_statewide_test_year_over_year_growth(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
   end 
 
 

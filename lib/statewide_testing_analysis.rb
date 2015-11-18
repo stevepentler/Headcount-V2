@@ -12,20 +12,6 @@ class StatewideTestingAnalysis
     all_district_growths = district_subject_growths(testing_categories)
     top_districts(testing_categories, all_district_growths)
   end
-  #   if testing_categories.has_key?(:subject)
-  #     top = nil
-  #     if testing_categories.has_key?(:top)
-  #       top = testing_categories[:top]
-  #     end
-  #     (district_subject_growths(testing_categories).max(top) {|pair| pair[1]})
-  #   else
-  #     change = @statewide_tests.map do |state_test|
-  #       if state_test.name != "COLORADO"
-  #        district_growths_across_subjects(testing_categories, state_test)
-  #       end
-  #     end
-  #   end 
-  # end 
 
   def top_districts(testing_categories, all_district_growths)
     top = nil
@@ -56,21 +42,26 @@ class StatewideTestingAnalysis
     subjects = [:math, :writing, :reading]
     values = subjects.map do |single_subject|
       testing_categories[:subject] = single_subject
-      {single_subject => (find_growth_for_subjects(testing_categories, state_test))}
+      find_growth_for_subjects(testing_categories, state_test)
+      # {single_subject => (find_growth_for_subjects(testing_categories, state_test))}
     end
-    values
-    # (values.compact.inject(:+) / 3)
+    truncate(values.compact.inject(:+) / 3)
   end
 
   def find_growth_for_subjects(testing_categories, state_test)
     array = state_test.proficient_by_grade(testing_categories[:grade]).to_a
     first = array[0][1][testing_categories[:subject]]
     last = array[-1][1][testing_categories[:subject]]
-    truncate((last - first)/(array[-1][0] - array[0][0]))
+    difference = ((last - first) * even_weighting(testing_categories))
+    truncate((difference)/(array[-1][0] - array[0][0]))
   end
 
-  def even_weighting
-    {math: 1.0/3, reading: 1.0/3, writing: 1.0/3}
+  def even_weighting(testing_categories)
+    if testing_categories.has_key?(:weighting)
+      ((testing_categories[:weighting][testing_categories[:subject]]) * 3)
+    else
+      1
+    end
   end 
 
   def truncate(float)
