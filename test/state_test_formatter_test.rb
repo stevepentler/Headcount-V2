@@ -21,7 +21,5 @@ class StatewideTestFormatterTest < Minitest::Test
 
   def test_parses_into_hash
     er = StatewideTestFormatter.new
-    er.district_governor(load_data)
-    binding.pry
   end
 end

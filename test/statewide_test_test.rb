@@ -32,6 +32,14 @@ class StatewideTestTest < Minitest::Test
     assert_equal expected_hash, st.statewide_tests[0].proficient_by_grade(8)[2008]
   end 
 
+  def test_proficient_by_race_or_ethnicity_for_invalid_race_raises_error
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+     assert_raises "UnknownDataError" do 
+      st.statewide_tests[0].proficient_by_race_or_ethnicity(:not_a_race)
+    end
+  end 
+
   def test_proficient_by_race_or_ethnicity_returns_float
     st = StatewideTestingRepository.new
     st.load_data(input)
@@ -45,13 +53,8 @@ class StatewideTestTest < Minitest::Test
     assert_equal expected_hash, st.statewide_tests[0].proficient_by_race_or_ethnicity(:asian)[2011]
   end 
 
-  def test_proficient_by_race_or_ethnicity_for_invalid_race_raises_error
-    st = StatewideTestingRepository.new
-    st.load_data(input)
-    assert_equal 0.51, st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 2010)
-  end 
 
-  def test_for_subject_by_grade_in_year_with_invalid_parameter_returns_error
+  def test_for_subject_by_grade_in_year_with_invalid_subject_returns_error
     st = StatewideTestingRepository.new
     st.load_data(input)
     assert_raises "UnknownDataError" do 
@@ -59,23 +62,82 @@ class StatewideTestTest < Minitest::Test
     end
   end 
 
-  def test_for_subject_by_grade_in_year_with_valid_parameter_returns_float
+  def test_for_subject_by_grade_in_year_with_invalid_year_returns_error
     st = StatewideTestingRepository.new
     st.load_data(input)
     assert_raises "UnknownDataError" do 
-      st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 2010)
+      st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 3000)
+    end
+  end 
+
+  def test_for_subject_by_grade_in_year_with_invalid_grade_returns_error
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_raises "UnknownDataError" do 
+      st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 11, 2010)
+    end
+  end 
+
+   def test_for_subject_by_grade_in_year_with_valid_parameter_returns_float
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_equal Float, st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 2010).class
+  end 
+
+  def test_for_subject_by_grade_in_year_with_valid_parameter_returns_float
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_equal Float, st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 2010).class
   end 
 
   def test_for_subject_by_grade_in_year_with_valid_parameter
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_equal 0.51, st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 2010)
   end 
 
   def test_proficient_for_subject_by_race_in_year_returns_float
-  end 
-
-  def test_proficient_for_subject_by_race_in_year_for_valid_race
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_equal Float, st.statewide_tests[0].proficient_for_subject_by_grade_in_year(:math, 8, 2010).class
   end 
 
   def test_proficient_for_subject_by_race_in_year_for_invalid_race
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_raises "UnknownDataError" do 
+    st.statewide_tests[0].proficient_for_subject_by_race_in_year(:math, :not_a_race, 2010)
+    end
+  end
+
+  def test_proficient_for_subject_by_race_in_year_for_invalid_subject
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_raises "UnknownDataError" do 
+    st.statewide_tests[0].proficient_for_subject_by_race_in_year(:calligraphy, :not_a_race, 2010)
+    end
+  end 
+
+  def test_proficient_for_subject_by_race_in_year_for_invalid_year
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_raises "UnknownDataError" do 
+    st.statewide_tests[0].proficient_for_subject_by_race_in_year(:math, :black, 3000)
+    end
+  end
+
+  def test_proficient_for_subject_by_race_in_year_for_valid_parameters
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_equal Float, st.statewide_tests[0].proficient_for_subject_by_race_in_year(:math, :asian, 2012).class
+  end 
+
+  def test_proficient_for_subject_by_race_in_year_for_valid_parameters
+    st = StatewideTestingRepository.new
+    st.load_data(input)
+    assert_equal 0.719, st.statewide_tests[0].proficient_for_subject_by_race_in_year(:math, :asian, 2012)
+    assert_equal 0.515, st.statewide_tests[0].proficient_for_subject_by_race_in_year(:reading, :black, 2012)
+    assert_equal 0.663, st.statewide_tests[0].proficient_for_subject_by_race_in_year(:writing, :white, 2011)
   end 
 
 end 

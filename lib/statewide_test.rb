@@ -27,7 +27,7 @@ class StatewideTest
     end 
   end
 
-  def proficient_for_subject_by_grade_in_year(subject, grade, year)
+  def proficient_for_subject_by_grade_in_year(subject, grade, year = nil)
     if statewide_test_data[grade][year][subject] == nil
       raise "UnknownDataError" 
     else 
@@ -36,9 +36,11 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_race_in_year(subject, race, year)
+    if statewide_test_data[race][year][subject] == nil
+      raise "UnknownDataError" 
+    else 
+      statewide_test_data[race][year][subject]   
+    end
   end
 
-  def graduation_rate_in_year(year)
-    graduation_data[year]
-  end
 end
