@@ -13,14 +13,6 @@ class StatewideTestingAnalysis
     top_districts(testing_categories, all_district_growths)
   end
 
-  def top_districts(testing_categories, all_district_growths)
-    top = nil
-    if testing_categories.has_key?(:top)
-      top = testing_categories[:top]
-    end
-    (all_district_growths.max(top) {|pair| pair[1]})
-  end 
-
   def district_subject_growths(testing_categories)
     change = @statewide_tests.map do |state_test|
       if state_test.name != "COLORADO"
@@ -34,6 +26,14 @@ class StatewideTestingAnalysis
     testing_categories.has_key?(:subject) ?
       (find_growth_for_subjects(testing_categories, state_test)) :
       (district_growths_across_subjects(testing_categories, state_test)) 
+  end 
+
+  def top_districts(testing_categories, all_district_growths)
+    top = nil
+    if testing_categories.has_key?(:top)
+      top = testing_categories[:top]
+    end
+    (all_district_growths.max(top) {|pair| pair[1]})
   end 
 
   def district_growths_across_subjects(testing_categories, state_test)
@@ -60,12 +60,10 @@ class StatewideTestingAnalysis
 
   def input_error?(testing_categories)
     unless testing_categories.keys.include?(:grade)
-      raise InsufficientInformationError,
-        "A grade must be provided to answer this question"
+      raise InsufficientInformationError, "A grade must be provided to answer this question"
     end 
     unless testing_categories[:grade] == 3 || testing_categories[:grade] == 8
-      raise UnknownDataError,
-      "#{testing_categories[:grade]} is not a known grade."
+      raise UnknownDataError, "#{testing_categories[:grade]} is not a known grade."
     end 
   end
 
