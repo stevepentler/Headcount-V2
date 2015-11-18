@@ -5,7 +5,7 @@ require './lib/statewide_testing_repo'
 require './lib/csv_parser'
 require './lib/district_repository'
 
-class StatewideTestingRepositoryTest < Minitest::Test
+class StatewideTestRepositoryTest < Minitest::Test
 
   def input
     csv = {
@@ -22,31 +22,31 @@ class StatewideTestingRepositoryTest < Minitest::Test
   end
 
   def test_repo_stores_object_name
-    er = StatewideTestingRepository.new
+    er = StatewideTestRepository.new
     er.load_data(input)
     assert_equal "COLORADO", er.statewide_tests[0].name
   end
 
   def test_finds_district_return_nil_missing_name
-    er = StatewideTestingRepository.new
+    er = StatewideTestRepository.new
     er.load_data(input)
     assert_equal nil, er.find_by_name("Turing")
   end
   
   def test_finds_district_by_name
-    er = StatewideTestingRepository.new
+    er = StatewideTestRepository.new
     er.load_data(input)
     assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
   end
   
   def test_finds_lowercase_name
-    er = StatewideTestingRepository.new
+    er = StatewideTestRepository.new
     er.load_data(input)
     assert_equal "ACADEMY 20", er.find_by_name("ACADEMY 20").name
   end
   
   def test_name_returns_nil_invalid_search
-    er = StatewideTestingRepository.new
+    er = StatewideTestRepository.new
     er.load_data(input)
     assert_equal nil, er.find_by_name("Turing")
   end

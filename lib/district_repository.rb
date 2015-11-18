@@ -19,7 +19,7 @@ class DistrictRepository
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)}
     @enrollment_repo = EnrollmentRepository.new
     @enrollment_repo.load_data(csv_paths)
-    @statewide_test_repo = StatewideTestingRepository.new
+    @statewide_test_repo = StatewideTestRepository.new
     @statewide_test_repo.load_data(csv_paths)
     create_data_enroll_link
   end
