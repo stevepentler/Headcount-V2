@@ -1,4 +1,5 @@
 require_relative 'statewide_test_formatter'
+require_relative 'csv_parser'
 require 'pry'
 
 class StatewideTestingRepository
