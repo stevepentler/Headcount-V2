@@ -7,7 +7,7 @@ class StatewideTestingAnalysis
     @statewide_tests = @district_repo.statewide_test_repo.statewide_tests
   end 
 
-  def top_statewide_test_year_over_year_growth(testing_categories)
+  def top_statewide_testing(testing_categories)
     input_error?(testing_categories)
     all_district_growths = district_subject_growths(testing_categories)
     top_districts(testing_categories, all_district_growths)
