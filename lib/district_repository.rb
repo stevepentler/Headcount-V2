@@ -29,7 +29,7 @@ class DistrictRepository
       temp = @enrollment_repo.find_by_name(district.name)
       district.enrollment = temp
       temp_test = @statewide_test_repo.find_by_name(district.name)
-      district.statewide_testing = temp_test
+      district.statewide_test = temp_test
     end
   end
 

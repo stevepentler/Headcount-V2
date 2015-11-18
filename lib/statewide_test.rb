@@ -28,19 +28,19 @@ class StatewideTest
     end 
   end
 
-  def proficient_for_subject_by_grade_in_year(subject, grade, year = nil)
-    if statewide_test_data[grade][year][subject] == nil
-      raise UnknownDataError.new
+  def proficient_for_subject_by_grade_in_year(subject_, grade, year = nil)
+    if statewide_test_data[grade][year][subject_].zero?
+      "N/A"
     else 
-      statewide_test_data[grade][year][subject]   
+      statewide_test_data[grade][year][subject_]
     end
   end
 
-  def proficient_for_subject_by_race_in_year(subject, race, year)
-    if statewide_test_data[race][year][subject] == nil
-      raise UnknownDataError.new
+  def proficient_for_subject_by_race_in_year(subject_, race, year = nil)
+    if statewide_test_data.has_key?(race)
+      statewide_test_data[race][year][subject_]   
     else 
-      statewide_test_data[race][year][subject]   
+      raise UnknownDataError.new
     end
   end
 

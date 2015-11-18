@@ -54,6 +54,6 @@ class StatewideTestRepositoryTest < Minitest::Test
   def test_reaches_to_district_repo_for_link
     dr = DistrictRepository.new
     dr.load_data(input)
-    assert dr.districts[0].statewide_testing != nil
+    assert dr.districts[0].statewide_test != nil
   end
 end

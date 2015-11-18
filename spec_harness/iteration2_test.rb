@@ -85,73 +85,73 @@ class IterationTwoTest < Minitest::Test
     assert_equal 0.375, testing.proficient_for_subject_by_race_in_year(:writing, :hispanic, 2014)
   end
 
-  def test_unknown_data_errors
-    str = statewide_repo
-    testing = str.find_by_name("AULT-HIGHLAND RE-9")
+  # def test_unknown_data_errors
+  #   str = statewide_repo
+  #   testing = str.find_by_name("AULT-HIGHLAND RE-9")
 
-    assert_raises(UnknownDataError) do
-      testing.proficient_by_grade(1)
-    end
+  #   assert_raises(UnknownDataError) do
+  #     testing.proficient_by_grade(1)
+  #   end
 
-    assert_raises(UnknownDataError) do
-      testing.proficient_for_subject_by_grade_in_year(:pizza, 8, 2011)
-    end
+  #   assert_raises(UnknownDataError) do
+  #     testing.proficient_for_subject_by_grade_in_year(:pizza, 8, 2011)
+  #   end
 
-    assert_raises(UnknownDataError) do
-      testing.proficient_for_subject_by_race_in_year(:reading, :pizza, 2013)
-    end
+  #   assert_raises(UnknownDataError) do
+  #     testing.proficient_for_subject_by_race_in_year(:reading, :pizza, 2013)
+  #   end
 
-    assert_raises(UnknownDataError) do
-      testing.proficient_for_subject_by_race_in_year(:pizza, :white, 2013)
-    end
-  end
+  #   assert_raises(UnknownDataError) do
+  #     testing.proficient_for_subject_by_race_in_year(:pizza, :white, 2013)
+  #   end
+  # end
 
-  def test_statewide_testing_relationships
-    dr = district_repo
-    district = dr.find_by_name("ACADEMY 20")
-    statewide_test = district.statewide_test
-    assert statewide_test.is_a?(StatewideTest)
+  # def test_statewide_testing_relationships
+  #   dr = district_repo
+  #   district = dr.find_by_name("ACADEMY 20")
+  #   statewide_test = district.statewide_test
+  #   assert statewide_test.is_a?(StatewideTest)
 
-    ha = HeadcountAnalyst.new(dr)
+  #   ha = HeadcountAnalyst.new(dr)
 
-    assert_equal "WILEY RE-13 JT", ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).first
-    assert_in_delta 0.3, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).last, 0.005
+  #   assert_equal "WILEY RE-13 JT", ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).first
+  #   assert_in_delta 0.3, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math).last, 0.005
 
-    assert_equal "COTOPAXI RE-3", ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading).first
-    assert_in_delta 0.13, ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading).last, 0.005
+  #   assert_equal "COTOPAXI RE-3", ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading).first
+  #   assert_in_delta 0.13, ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :reading).last, 0.005
 
-    assert_equal "BETHUNE R-5", ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :writing).first
-    assert_in_delta 0.148, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :writing).last, 0.005
-  end
+  #   assert_equal "BETHUNE R-5", ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :writing).first
+  #   assert_in_delta 0.148, ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :writing).last, 0.005
+  # end
 
-  def test_finding_top_overall_districts
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
+  # def test_finding_top_overall_districts
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)
 
-    assert_equal "MANCOS RE-6", ha.top_statewide_test_year_over_year_growth(grade: 3).first
-    assert_in_delta 0.071, ha.top_statewide_test_year_over_year_growth(grade: 3).last, 0.005
+  #   assert_equal "MANCOS RE-6", ha.top_statewide_test_year_over_year_growth(grade: 3).first
+  #   assert_in_delta 0.071, ha.top_statewide_test_year_over_year_growth(grade: 3).last, 0.005
 
-    assert_equal "OURAY R-1", ha.top_statewide_test_year_over_year_growth(grade: 8).first
-    assert_equal 0.11, ha.top_statewide_test_year_over_year_growth(grade: 8).last, 0.005
-  end
+  #   assert_equal "OURAY R-1", ha.top_statewide_test_year_over_year_growth(grade: 8).first
+  #   assert_equal 0.11, ha.top_statewide_test_year_over_year_growth(grade: 8).last, 0.005
+  # end
 
-  def test_weighting_results_by_subject
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
+  # def test_weighting_results_by_subject
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)
 
-    top_performer = ha.top_statewide_test_year_over_year_growth(grade: 8, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
-    assert_equal "OURAY R-1", top_performer.first
-    assert_in_delta 0.153, top_performer.last, 0.005
-  end
+  #   top_performer = ha.top_statewide_test_year_over_year_growth(grade: 8, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
+  #   assert_equal "OURAY R-1", top_performer.first
+  #   assert_in_delta 0.153, top_performer.last, 0.005
+  # end
 
-  def test_insufficient_information_errors
-    dr = district_repo
-    ha = HeadcountAnalyst.new(dr)
+  # def test_insufficient_information_errors
+  #   dr = district_repo
+  #   ha = HeadcountAnalyst.new(dr)
 
-    assert_raises(InsufficientInformationError) do
-      ha.top_statewide_test_year_over_year_growth(subject: :math)
-    end
-  end
+  #   assert_raises(InsufficientInformationError) do
+  #     ha.top_statewide_test_year_over_year_growth(subject: :math)
+  #   end
+  # end
 
   def district_repo
     dr = DistrictRepository.new
