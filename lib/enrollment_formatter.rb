@@ -11,6 +11,8 @@ class EnrollmentFormatter
 
   def district_governor(enrollments_csv)
     enrollments_csv[:enrollment].each do |category, enrollment_rows|
+      category = format_category(category)
+  
       enrollment_rows.each do |row|
         if @enrollments_hash.empty?
           district_yearly_data(category, row)
@@ -20,7 +22,6 @@ class EnrollmentFormatter
       end
     end
   end
-
 
   def unique_enrollment?(category, row)
       if hash_find(row)
@@ -42,6 +43,7 @@ class EnrollmentFormatter
     @enrollments_hash << {:name => row[:location], category => (yearly_data(row))}
   end
 
+
   def merge_enroll_data(enrollment, category, row)
     if enrollment.has_key?(category)
       enrollment[category].merge!(yearly_data(row))
@@ -50,6 +52,10 @@ class EnrollmentFormatter
     end
   end
 
+  def format_category(category)
+    category = :kindergarten_participation if category == :kindergarten
+    category
+  end 
 
 
 end
