@@ -7,11 +7,12 @@ class StatewideTestingAnalysis
   def initialize(district_repo)
     @district_repo = district_repo
     @statewide_tests = @district_repo.statewide_test_repo.statewide_tests
-  end 
+  end
 
   def top_statewide_testing(testing_categories)
     input_error?(testing_categories)
     all_district_growths = district_subject_growths(testing_categories)
+    binding.pry
     top_districts(testing_categories, all_district_growths)
   end
 
@@ -20,15 +21,15 @@ class StatewideTestingAnalysis
       if state_test.name != "COLORADO"
         [state_test.name, route_by_subject(testing_categories, state_test)]
       end
-    end 
+    end
     change.compact
   end
 
   def route_by_subject(testing_categories, state_test)
     testing_categories.has_key?(:subject) ?
       (find_growth_for_subjects(testing_categories, state_test)) :
-      (district_growths_across_subjects(testing_categories, state_test)) 
-  end 
+      (district_growths_across_subjects(testing_categories, state_test))
+  end
 
   def top_districts(testing_categories, all_district_growths)
     top = nil
@@ -36,7 +37,7 @@ class StatewideTestingAnalysis
       top = testing_categories[:top]
     end
     (all_district_growths.max(top) {|pair| pair[1]})
-  end 
+  end
 
   def district_growths_across_subjects(testing_categories, state_test)
     subjects = [:math, :writing, :reading]
@@ -44,6 +45,7 @@ class StatewideTestingAnalysis
       testing_categories[:subject] = single_subject
       find_growth_for_subjects(testing_categories, state_test)
     end
+    testing_categories.delete(:subject)
     truncate(values.compact.inject(:+) / 3)
   end
 
@@ -52,21 +54,21 @@ class StatewideTestingAnalysis
     first = array[0][1][testing_categories[:subject]]
     last = array[-1][1][testing_categories[:subject]]
     difference = ((last - first) * even_weighting(testing_categories))
-    truncate((difference)/(array[-1][0] - array[0][0]))
+    (difference)/(array[-1][0] - array[0][0])
   end
 
   def even_weighting(testing_categories)
     (testing_categories.has_key?(:weighting)) ?
     ((testing_categories[:weighting][testing_categories[:subject]]) * 3) : 1
-  end 
+  end
 
   def input_error?(testing_categories)
     unless testing_categories.keys.include?(:grade)
       raise InsufficientInformationError.new, "A grade must be provided to answer this question"
-    end 
+    end
     unless testing_categories[:grade] == 3 || testing_categories[:grade] == 8
       raise UnknownDataError.new, "#{testing_categories[:grade]} is not a known grade."
-    end 
+    end
   end
 
   def truncate(float)
