@@ -109,10 +109,16 @@ class StatewideTestingAnalysisTest < MiniTest::Test
   #   assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
   # end 
 
-  # def test_find_multiple_leaders_returns_correct_count_when_top_greater_than_elements
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert (st.top_statewide_test_year_over_year_growth(grade: 3, top: 5000).count > 1)
-  # end 
+  def test_find_multiple_leaders_across_subject
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing, top: 2).count
+  end
+
+  def test_find_multiple_leaders_returns_correct_count_when_top_greater_than_elements
+    skip
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert (st.top_statewide_test_year_over_year_growth(grade: 3, top: 5000).count > 1)
+  end 
 
 
 end

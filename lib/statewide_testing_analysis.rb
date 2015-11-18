@@ -9,9 +9,12 @@ class StatewideTestingAnalysis
 
   def top_statewide_test_year_over_year_growth(testing_categories)
     input_error?(testing_categories)
-
-    if testing_categories.key?(:subject) ###find leading district for subject
-      district_subject_growths(testing_categories).max {|pair| pair[1]}
+    if testing_categories.has_key?(:subject)
+      top = nil
+      if testing_categories.has_key?(:top)
+        top = testing_categories[:top]
+      end
+      (district_subject_growths(testing_categories).max(top) {|pair| pair[1]})
     end 
   end 
 
