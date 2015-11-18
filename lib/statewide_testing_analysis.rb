@@ -31,11 +31,9 @@ class StatewideTestingAnalysis
   end
 
   def route_by_subject(testing_categories, state_test)
-    if testing_categories.has_key?(:subject)
-      find_growth_for_subjects(testing_categories, state_test)
-    else
-      district_growths_across_subjects(testing_categories, state_test)
-    end 
+    testing_categories.has_key?(:subject) ?
+      (find_growth_for_subjects(testing_categories, state_test)) :
+      (district_growths_across_subjects(testing_categories, state_test)) 
   end 
 
   def district_growths_across_subjects(testing_categories, state_test)
@@ -43,7 +41,6 @@ class StatewideTestingAnalysis
     values = subjects.map do |single_subject|
       testing_categories[:subject] = single_subject
       find_growth_for_subjects(testing_categories, state_test)
-      # {single_subject => (find_growth_for_subjects(testing_categories, state_test))}
     end
     truncate(values.compact.inject(:+) / 3)
   end
@@ -57,17 +54,10 @@ class StatewideTestingAnalysis
   end
 
   def even_weighting(testing_categories)
-    if testing_categories.has_key?(:weighting)
-      ((testing_categories[:weighting][testing_categories[:subject]]) * 3)
-    else
-      1
-    end
+    (testing_categories.has_key?(:weighting)) ?
+    ((testing_categories[:weighting][testing_categories[:subject]]) * 3) : 1
   end 
 
-  def truncate(float)
-    (float * 1000).floor / 1000.to_f
-  end
- 
   def input_error?(testing_categories)
     unless testing_categories.keys.include?(:grade)
       raise InsufficientInformationError,
@@ -77,5 +67,9 @@ class StatewideTestingAnalysis
       raise UnknownDataError,
       "#{testing_categories[:grade]} is not a known grade."
     end 
-  end 
+  end
+
+  def truncate(float)
+    (float * 1000).floor / 1000.to_f
+  end
 end

@@ -32,7 +32,7 @@ class IterationZeroTest < Minitest::Test
 
     truncated = all_years.map { |year, rate| [year, rate.to_s[0..4].to_f]}.to_h
     assert_equal truncated, e.kindergarten_participation_by_year
-  endq
+  end
 
   # def test_loading_and_finding_enrollments
   #   er = EnrollmentRepository.new

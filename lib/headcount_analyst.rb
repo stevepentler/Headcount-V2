@@ -1,11 +1,13 @@
 require_relative 'kindergarten_graduation_analysis'
+require_relative 'statewide_testing_analysis'
 
 class HeadcountAnalyst
 
-  attr_reader :kindergarten_graduation_analysis
+  attr_reader :kindergarten_graduation_analysis, :statewide_testing_analysis
 
   def initialize(district_repo)
     @kindergarten_graduation_analysis = KindergartenGraduationAnalysis.new(district_repo)
+    @statewide_testing_analysis = StatewideTestingAnalysis.new(district_repo)
   end
 
   def district_kindergarten_average(district)
@@ -31,4 +33,8 @@ class HeadcountAnalyst
   def kindergarten_participation_correlates_with_high_school_graduation(district)
     kindergarten_graduation_analysis.kindergarten_participation_correlates_with_high_school_graduation(district)
   end
+
+  def top_statewide_test_year_over_year_growth(testing_categories)
+    statewide_testing_analysis.top_statewide_test_year_over_year_growth(testing_categories)
+  end 
 end
