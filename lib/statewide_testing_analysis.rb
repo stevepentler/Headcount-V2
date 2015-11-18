@@ -1,5 +1,7 @@
 require_relative 'district_repository'
 require_relative 'statewide_test'
+require_relative 'standard_errors'
+
 class StatewideTestingAnalysis
 
   def initialize(district_repo)
@@ -60,10 +62,10 @@ class StatewideTestingAnalysis
 
   def input_error?(testing_categories)
     unless testing_categories.keys.include?(:grade)
-      raise InsufficientInformationError, "A grade must be provided to answer this question"
+      raise InsufficientInformationError.new, "A grade must be provided to answer this question"
     end 
     unless testing_categories[:grade] == 3 || testing_categories[:grade] == 8
-      raise UnknownDataError, "#{testing_categories[:grade]} is not a known grade."
+      raise UnknownDataError.new, "#{testing_categories[:grade]} is not a known grade."
     end 
   end
 
