@@ -18,15 +18,29 @@ class StatewideTestingAnalysis
     end 
   end 
 
-
   def district_subject_growths(testing_categories)
     change = @statewide_tests.map do |state_test|
-      array = state_test.proficient_by_grade(testing_categories[:grade]).to_a
-      first = array[0][1][testing_categories[:subject]]
-      last = array[-1][1][testing_categories[:subject]]
-      [state_test.name, truncate(last - first)]
-    end
- end
+      if state_test.name != "COLORADO"
+        [state_test.name, (find_growth_for_subjects(testing_categories, state_test))]
+      end
+    end 
+    change.compact
+  end
+
+  def district_growths_across_subjects(testing_categories)
+    testing_categories[:subject]
+  end
+
+  def find_growth_for_subjects(testing_categories, state_test)
+    array = state_test.proficient_by_grade(testing_categories[:grade]).to_a
+    first = array[0][1][testing_categories[:subject]]
+    last = array[-1][1][testing_categories[:subject]]
+    truncate((last - first)/(array[-1][0] - array[0][0]))
+  end
+
+  def even_weighting
+    {math: 1.0/3, reading: 1.0/3, writing: 1.0/3}
+  end 
 
   def truncate(float)
     (float * 1000).floor / 1000.to_f
@@ -116,9 +130,7 @@ class StatewideTestingAnalysis
   #   end  
   # end  
 
-  # def even_weighting
-  #   {math: 1.0/3, reading: 1.0/3, writing: 1.0/3}
-  # end 
+ 
   def input_error?(testing_categories)
     unless testing_categories.keys.include?(:grade)
       raise InsufficientInformationError,

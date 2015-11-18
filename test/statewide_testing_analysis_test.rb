@@ -60,12 +60,12 @@ class StatewideTestingAnalysisTest < MiniTest::Test
 
   def test_find_single_leader
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.026], st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.004], st.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
   end
 
   def test_find_single_leader_different_grade_and_subject
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.084], st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.014], st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing)
   end
 
   # def test_across_all_subjects_returns_array
@@ -114,11 +114,15 @@ class StatewideTestingAnalysisTest < MiniTest::Test
     assert_equal 2, st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing, top: 2).count
   end
 
-  def test_find_multiple_leaders_returns_correct_count_when_top_greater_than_elements
-    skip
+  def test_find_multiple_leaders
     st = StatewideTestingAnalysis.new(district_repo)
-    assert (st.top_statewide_test_year_over_year_growth(grade: 3, top: 5000).count > 1)
+    assert_equal [["ACADEMY 20", 0.002], ["ADAMS-ARAPAHOE 28J", 0.014]], st.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing, top: 2)
   end 
+
+  # def test_find_multiple_leaders_returns_correct_count_when_top_greater_than_elements
+  #   st = StatewideTestingAnalysis.new(district_repo)
+  #   assert (st.top_statewide_test_year_over_year_growth(grade: 3, top: 5000).count > 1)
+  # end 
 
 
 end
