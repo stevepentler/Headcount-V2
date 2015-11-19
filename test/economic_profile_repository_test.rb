@@ -23,7 +23,7 @@ class EconomicProfileTest < Minitest::Test
   def test_repo_stores_object_name
     er = EconomicProfileRepository.new
     er.load_data(input)
-    assert_equal "ACADEMY 20", er.economic_profiles[0].name
+    assert_equal "COLORADO", er.economic_profiles[0].name
   end
 
   def test_finds_district_return_nil_missing_name
