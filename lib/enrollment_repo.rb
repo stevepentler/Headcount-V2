@@ -35,6 +35,6 @@ class EnrollmentRepository
     find_all = @enrollments.select do |enrollment|
       enrollment if enrollment.name.include?(word_fragment.upcase)
     end
-    find_all
+  find_all
   end
 end

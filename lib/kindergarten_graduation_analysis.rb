@@ -81,23 +81,18 @@ class KindergartenGraduationAnalysis
   end
 
   def correlation_boolean(select_districts)
-      districts_in_range = select_districts.count do |enrollment|
-        comparison = kindergarten_participation_against_high_school_graduation(enrollment.name)
-        (comparison > 0.6 && comparison < 1.5) ? true : false
+    districts_in_range = select_districts.count do |enrollment|
+      comparison = kindergarten_participation_against_high_school_graduation(enrollment.name)
+      (comparison > 0.6 && comparison < 1.5) ? true : false
     end
     ((districts_in_range / select_districts.count) > 0.70) ? true : false
   end
 
   def nan_solution(comparison)
-    if comparison == "Nan"
-      0
-    else
-      truncate(comparison.to_f)
-    end
+    comparison == "Nan" ? 0 : truncate(comparison.to_f)
   end
 
   def truncate(float)
     (float * 1000).floor / 1000.to_f
   end
-
 end
