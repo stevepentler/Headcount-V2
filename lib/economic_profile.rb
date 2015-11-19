@@ -1,6 +1,6 @@
 require_relative 'standard_errors'
-class EconomicProfile
 
+class EconomicProfile
 
   attr_reader :name, :economic_profiles
 
@@ -11,16 +11,16 @@ class EconomicProfile
 
   def estimated_median_household_income_in_year(year)
     values = economic_profiles[:median_household_income].map do |years, value|
-            value if (year >= years[0]) && (year <= years[1])
+      value if (year >= years[0]) && (year <= years[1])
     end
     fail UnknownDataError unless values != nil
-        ((values.compact.inject(:+))/values.compact.size).round.to_i
+    ((values.compact.inject(:+))/values.compact.size).round.to_i
   end
 
   def median_household_income_average
-     values = economic_profiles[:median_household_income].map do |years, value|
-            value
-            end
+    values = economic_profiles[:median_household_income].map do |years, value|
+      value
+    end
     ((values.compact.inject(:+))/values.size).round.to_i
   end
 
@@ -43,5 +43,4 @@ class EconomicProfile
     fail UnknownDataError unless economic_profiles[:title_i][year]
     economic_profiles[:title_i][year]
   end
-
 end

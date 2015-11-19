@@ -31,11 +31,7 @@ class EconomicProfileFormatter
   end
 
   def unique_test?(category, row)
-    if hash_find(row)
-      merge_test_data(hash_find(row), category, row)
-    else
-      district_yearly_data(category, row)
-    end
+    hash_find(row) ? merge_test_data(hash_find(row), category, row) : district_yearly_data(category, row)
   end
 
   def hash_find(row)
@@ -47,7 +43,6 @@ class EconomicProfileFormatter
   end
 
   def yearly_data(category, row)
-
     if category == :children_in_poverty ||  category == :title_i
       {row[:timeframe] => row[:data]}
     elsif category == :free_or_reduced_price_lunch
@@ -55,7 +50,6 @@ class EconomicProfileFormatter
     elsif row[:timeframe].to_s.include?('-')
       {((row[:timeframe].split('-')).map{|i| i.to_i}) => row[:data]}
     end
-      #{:median_household_income => {[2005, 2009] => 50000, [2008, 2014] => 60000}
   end
 
   def free_or_reduced_price_lunch_format(row)

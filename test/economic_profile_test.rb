@@ -16,8 +16,7 @@ class EconomicProfileTest < Minitest::Test
               :children_in_poverty => "./data/School-aged children in poverty.csv",
               :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
               :title_i => "./data/Title I students.csv"
-  
-                          }}
+                            }}
   end
 
   def test_estimated_median_income_in_year_returns_integer_for_2010
@@ -138,22 +137,9 @@ class EconomicProfileTest < Minitest::Test
     end
   end 
 
-  def test_title_one_in_year_returns_percentage_as_decimal
-    ep = EconomicProfileRepository.new
-    ep.load_data(input)
-    assert (ep.economic_profiles[0].title_i_in_year(2010) <= 1)
-  end 
-
   def test_title_one_in_year_returns_integer
     ep = EconomicProfileRepository.new
     ep.load_data(input)
     assert_equal 0.011, ep.economic_profiles[1].title_i_in_year(2011)
   end 
-
-  def test_title_one_in_year_is_positive
-    ep = EconomicProfileRepository.new
-    ep.load_data(input)
-    refute (ep.economic_profiles[0].title_i_in_year(2010) <= 0)
-  end 
-
 end
