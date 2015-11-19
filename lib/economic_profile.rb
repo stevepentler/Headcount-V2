@@ -1,5 +1,9 @@
 class EconomicProfile
 
+  def initialize(economic_profiles)  #####?????
+    @economic_profiles = economic_profiles
+  end 
+
   def estimated_median_household_income_in_year(year)
     if statewide_test_data.has_key?(year)
     else
@@ -22,7 +26,7 @@ class EconomicProfile
   def title_i_in_year(year)
   end
 
-
-
+  def economic_profile
+  end 
 
 end
