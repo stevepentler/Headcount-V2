@@ -19,7 +19,7 @@ class EnrollmentFormatter
   end
 
   def unique_enrollment?(category, row)
-    hash_find(row) ? merge_enroll_data(hash_find(row), category, row) : 
+    hash_find(row) ? merge_enroll_data(hash_find(row), category, row) :
       district_yearly_data(category, row)
   end
 
