@@ -27,7 +27,7 @@ class GraduationAnalysis
     district01 = pull_district_objects(district1)
     district02 = pull_district_objects(district2)
     yearly_comparison(district01, district02)
-  end 
+  end
 
   def yearly_comparison(district01, district02)
     yearly_comparison = {}

@@ -27,8 +27,8 @@ class KindergartenAnalysis
     district01 = pull_district_objects(district1)
     district02 = pull_district_objects(district2)
     yearly_comparison(district01, district02)
-  end 
-    
+  end
+
 def yearly_comparison(district01, district02)
   yearly_comparison = {}
     district01.kindergarten_data.each do |year, value|
@@ -40,7 +40,7 @@ def yearly_comparison(district01, district02)
       end
     end
   yearly_comparison
-end 
+end
 
   def truncate(float)
     (float * 1000).floor / 1000.to_f
