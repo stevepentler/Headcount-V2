@@ -24,19 +24,23 @@ class KindergartenAnalysis
   end
 
   def kindergarten_rate_variation_trend(district1, district2)
-    district1 = pull_district_objects(district1)
-    district2 = pull_district_objects(district2)
-    yearly_comparison = {}
-    district1.kindergarten_data.each do |year, value|
-      if district2.kindergarten_data.include?(year)
-        division = district1.kindergarten_data[year] / district2.kindergarten_data[year]
+    district01 = pull_district_objects(district1)
+    district02 = pull_district_objects(district2)
+    yearly_comparison(district01, district02)
+  end 
+    
+def yearly_comparison(district01, district02)
+  yearly_comparison = {}
+    district01.kindergarten_data.each do |year, value|
+      if district02.kindergarten_data.include?(year)
+        division = district01.kindergarten_data[year] / district02.kindergarten_data[year]
         yearly_comparison[year] = truncate(division)
-       else
+      else
         yearly_comparison[year] = nil
       end
     end
-    yearly_comparison
-  end
+  yearly_comparison
+end 
 
   def truncate(float)
     (float * 1000).floor / 1000.to_f

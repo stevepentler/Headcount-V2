@@ -24,12 +24,16 @@ class GraduationAnalysis
   end
 
   def graduation_rate_variation_trend(district1, district2)
-    district1 = pull_district_objects(district1)
-    district2 = pull_district_objects(district2)
+    district01 = pull_district_objects(district1)
+    district02 = pull_district_objects(district2)
+    yearly_comparison(district01, district02)
+  end 
+
+  def yearly_comparison(district01, district02)
     yearly_comparison = {}
-    district1.graduation_data.each do |year, value|
-      if district2.graduation_data.include?(year)
-        division = district1.graduation_data[year] / district2.graduation_data[year]
+    district01.graduation_data.each do |year, value|
+      if district02.graduation_data.include?(year)
+        division = district01.graduation_data[year] / district02.graduation_data[year]
         yearly_comparison[year] = truncate(division)
       else
         yearly_comparison[year] = nil
