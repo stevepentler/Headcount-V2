@@ -1,4 +1,5 @@
 require_relative "economic_profile_formatter"
+
 require_relative "economic_profile"
 
 class EconomicProfileRepository
@@ -30,4 +31,4 @@ class EconomicProfileRepository
       name.upcase == profile.name.upcase
     end 
   end
-end 
+end

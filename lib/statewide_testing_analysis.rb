@@ -21,7 +21,7 @@ class StatewideTestingAnalysis
         [state_test.name, route_by_subject(testing_categories, state_test)]
       end
     end
-    change.compact
+    change
   end
 
   def route_by_subject(testing_categories, state_test)
@@ -36,7 +36,7 @@ class StatewideTestingAnalysis
     if testing_categories.has_key?(:top)
       amount = (testing_categories[:top]) * -1
     end
-    (all_district_growths.sort_by {|district| district[1]})[(amount..-1)]
+    (all_district_growths.compact.sort_by {|district| district[1]})[(amount..-1)]
   end
 
   def district_growths_across_subjects(testing_categories, state_test)

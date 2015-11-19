@@ -27,6 +27,7 @@ class EconomicProfileFormatter
     row = nil if (category == :children_in_poverty && row[:dataformat] == "Number")
     (category == :free_or_reduced_price_lunch && row[:poverty_level] != "Eligible for Free or Reduced Lunch") ?
     nil : row
+
   end
 
   def unique_test?(category, row)
@@ -46,6 +47,7 @@ class EconomicProfileFormatter
   end
 
   def yearly_data(category, row)
+
     if category == :children_in_poverty ||  category == :title_i
       {row[:timeframe] => row[:data]}
     elsif category == :free_or_reduced_price_lunch
@@ -69,7 +71,6 @@ class EconomicProfileFormatter
   end
 
   def merge_test_data(economic_profile, category, row)
-
     if economic_profile.has_key?(category)
       merge_sub_data(economic_profile, category, row)
     else
@@ -85,3 +86,4 @@ class EconomicProfileFormatter
     end
   end
 end
+

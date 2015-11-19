@@ -173,5 +173,4 @@ class EconomicProfileTest < Minitest::Test
   #   ep.load_data(input)
   #   assert_equal EconomicProfile, ep.economic_profile.class
   # end 
-
 end

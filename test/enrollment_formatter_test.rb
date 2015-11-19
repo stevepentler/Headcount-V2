@@ -27,7 +27,7 @@ class EnrollmentFormatterTest < Minitest::Test
     hash = {2007 => 0.39465}
     assert_equal hash, ef.yearly_data({:location => "Colorado", :timeframe => 2007, :dataformat => "Percent", :data => 0.39465})
   end
-  
+
   def test_district_yearly_data_returns_enrollment_object
     ef = EnrollmentFormatter.new
     row = {:location => "ACADEMY 20", :timeframe => 2010, :dataformat => "Percent", :data => 0.3915}
