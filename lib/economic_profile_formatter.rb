@@ -12,13 +12,21 @@ class EconomicProfileFormatter
   def district_governor(statewide_testing_csv)
     statewide_testing_csv[:economic_profile].each do |category, test_rows|
       test_rows.each do |row|
-        if @economic_profiles_hash.empty?
-          district_yearly_data(category, row)
-        else
-          unique_test?(category, row)
+        if initial_row_rejection(row)
+          if @economic_profiles_hash.empty?
+            district_yearly_data(category, row)
+          else
+            unique_test?(category, row)
+          end
         end
       end
     end
+    binding.pry
+  end
+
+  def initial_row_rejection(row)
+    nil if category == :children_in_poverty && row[:dataformat] == "Number"
+    nil if category == :free_or_reduced_price_lunch && row[:poverty] != "Eligible for Free or Reduced Lunch"
   end
 
   def unique_test?(category, row)
@@ -34,25 +42,38 @@ class EconomicProfileFormatter
   end
 
   def district_yearly_data(category, row)
-    @economic_profiles_hash << {:name => row[:location], sub_category_format(category, row) => yearly_data(category, row)}
-  end
-
-  def yearly_data(category, row)
-    if category == :children_in_poverty || :title_i
-      {row[:timeframe] => row[:data]}
-    elsif category == :free_or_reduced_price_lunch
-  end
-
-  def free_or_reduced_price_lunch_format(row)
-    if row[:poverty] == "Eligible for Free or Reduced Lunch" && row[:format] == "Percent"
-    # {2014 => {:percentage => 0.023, :total => 100}}
-
-  def district_yearly_data(category, row)
     @economic_profiles_hash << {:name => row[:location], category => yearly_data(category, row)}
   end
 
+  def yearly_data(category, row)
+    if category == :children_in_poverty
+      {row[:timeframe] => row[:data]}
+    elsif  category == :title_i && row[:dataformat] == "Percent"
+      {row[:timeframe] => row[:data]}
+    elsif category == :free_or_reduced_price_lunch
+      free_or_reduced_price_lunch_format(row)
+    elsif row[:timeframe].to_s.include?('-')
+      {((row[:timeframe].split('-')).map{|i| i.to_i}) => row[:data]}
+    end
+      #{:median_household_income => {[2005, 2009] => 50000, [2008, 2014] => 60000}
+  end
+
+  def
+
+  def free_or_reduced_price_lunch_format(row)
+    if row[:poverty] == "Eligible for Free or Reduced Lunch" && row[:format] == "Percent"
+      {row[:timeframe] => {:percentage => row[:data]}}
+    elsif row[:poverty] == "Eligible for Free or Reduced Lunch" && row[:format] == "Number"
+      {row[:timeframe] => {:total => row[:data]}}
+    end
+  end
+
+  def district_yearly_data(category, row)
+    @economic_profiles_hash << {:name => row[:location], category => yearly_data(category, row)} if (yearly_data(category, row) != nil)
+  end
+
   def merge_test_data(economic_profile, category, row)
-    if statewide_test.has_key?(category)
+    if statewide_test.has_key?(:title_i)
       if statewide_test[category].has_key?(row[:timeframe])
         statewide_test[category][row[:timeframe]].merge!(yearly_data(category, row)[row[:timeframe]])
       else

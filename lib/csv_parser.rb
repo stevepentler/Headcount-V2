@@ -41,7 +41,7 @@ class CSVParser
   def row_regulate(row)
     row[:location].upcase!
     row[:data] = truncate(row[:data].to_f)
-    row[:timeframe] = row[:timeframe].to_i
+    row[:timeframe].to_i if !row[:timeframe].include?('-')
   end
 
   def truncate(float)

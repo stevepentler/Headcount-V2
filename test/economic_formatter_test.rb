@@ -4,7 +4,7 @@ require 'minitest/pride'
 require './lib/economic_profile_formatter'
 require './lib/csv_parser'
 
-class EconomicProfileFormatter < Minitest::Test
+class EconomicProfileFormatterTest < Minitest::Test
 
   def load_data
     ld = {
@@ -17,8 +17,9 @@ class EconomicProfileFormatter < Minitest::Test
             :children_in_poverty => "./data/School-aged children in poverty.csv",
             :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
             :title_i => "./data/Title I students.csv"
-           }
+            }
           }
+
     csv_parser = CSVParser.new(ld)
     parsed_csv = csv_parser.parsed_csv
   end
@@ -26,9 +27,10 @@ class EconomicProfileFormatter < Minitest::Test
   def test_parses_into_hash
     er = EconomicProfileFormatter.new
     er.district_governor(load_data)
-    binding.pry
   end
 
+
+  #
   # def test_creates_sub_hash_year_percent_for_single_line
   #   ef = EconomicProfileFormatter.new
   #   hash = {2007 => 0.39465}
@@ -42,7 +44,7 @@ class EconomicProfileFormatter < Minitest::Test
   # end
 
   # def test_pairs_name_and_pair_for_repeat_district_name
-  #   ef = EnrollmentFormatter.new
+  #   ef = EconomicProfileFormatter.new
   #   object = {:kindergarten_data => {:timeframe => {2009 => 0.1}}}
   #   row = {:timeframe => {2010 => 0.391}}
   #   hash_mod = {2009=>0.1, 2010=>0.391}
