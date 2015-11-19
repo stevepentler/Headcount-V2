@@ -25,17 +25,18 @@ class StatewideTestingAnalysis
   end
 
   def route_by_subject(testing_categories, state_test)
+
     testing_categories.has_key?(:subject) ?
       (find_growth_for_subjects(testing_categories, state_test)) :
       (district_growths_across_subjects(testing_categories, state_test))
   end
 
   def top_districts(testing_categories, all_district_growths)
-    top = nil
+    amount = -1
     if testing_categories.has_key?(:top)
-      top = testing_categories[:top]
+      amount = (testing_categories[:top]) * -1
     end
-    (all_district_growths.max(top) {|pair| pair[1]})
+    (all_district_growths.sort_by {|district| district[1]})[amount]
   end
 
   def district_growths_across_subjects(testing_categories, state_test)
@@ -45,16 +46,23 @@ class StatewideTestingAnalysis
       find_growth_for_subjects(testing_categories, state_test)
     end
     testing_categories.delete(:subject)
-    value = truncate(values.compact.inject(:+) / 3)
-    value
+    truncate((values.compact.inject(:+) / 3))
+  end
+
+  def delete_zeroes_in_array(array, testing_categories)
+    array.select do |year|
+      year[1][testing_categories[:subject]] != 0.0
+    end
   end
 
   def find_growth_for_subjects(testing_categories, state_test)
     array = state_test.proficient_by_grade(testing_categories[:grade]).to_a
-    first = array[0][1][testing_categories[:subject]]
-    last = array[-1][1][testing_categories[:subject]]
+    compacted_array = delete_zeroes_in_array(array, testing_categories)
+    return -1000 if compacted_array[0].nil? || compacted_array.count == 1
+    first = compacted_array[0][1][testing_categories[:subject]]
+    last = compacted_array[-1][1][testing_categories[:subject]]
     difference = ((last - first) * even_weighting(testing_categories))
-    (difference)/(array[-1][0] - array[0][0])
+    (difference)/(compacted_array[-1][0] - compacted_array[0][0])
   end
 
   def even_weighting(testing_categories)
