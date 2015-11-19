@@ -1,40 +1,36 @@
-# require 'minitest'
-# require 'minitest/autorun'
-# require 'minitest/pride'
-# require './lib/economic_profile_formatter'
-# require './lib/csv_parser'
+require 'minitest'
+require 'minitest/autorun'
+require 'minitest/pride'
+require './lib/economic_profile_repository'
+require './lib/csv_parser'
 
-# class EconomicProfileTest < Minitest::Test
+class EconomicProfileTest < Minitest::Test
 
-#   def load_data
-#     ld = {
-#           :enrollment => {
-#             :high_school_graduation => "./data/High school graduation rates.csv",
-#             :kindergarten => "./data/Kindergartners in full-day program.csv"
-#           },
-#           :economic_profile => {
-#             :median_household_income => "./data/median_household_income_test_file.csv",
-#             :children_in_poverty => "./data/children_in_poverty_test_file.csv",
-#             :free_or_reduced_price_lunch => "./data/free_reduced_test_file.csv",
-#             :title_i => "./data/title_one_test_file.csv"
-#             }
-#           }
+  def input
 
-#     csv_parser = CSVParser.new(ld)
-#     parsed_csv = csv_parser.parsed_csv
-#   end
+    ld = {
+      :enrollment => {
+              :kindergarten => "./data/Kindergartners in full-day program.csv"},
+      :economic_profile => {
+              :median_household_income => "./data/Median household income.csv",
+              :children_in_poverty => "./data/School-aged children in poverty.csv",
+              :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+              :title_i => "./data/Title I students.csv"
+  
+                          }}
+  end
 
-  # def test_estimated_median_income_in_year_returns_integer_for_2010
-  #   ep = EnconomicProfileRepository.new
-  #   ep.load_data(input)
-  #   assert_equal Integer, ep.estimated_median_household_income_in_year(2010).class
-  # end 
+  def test_estimated_median_income_in_year_returns_integer_for_2010
+    ep = EconomicProfileRepository.new
+    ep.load_data(input)
+    assert_equal Integer, ep.economic_profiles[0].estimated_median_household_income_in_year(2010).class
+  end  
 
-  # def test_estimated_median_income_in_year_returns_positive_number
-  #   ep = EnconomicProfileRepository.new
-  #   ep.load_data(input)
-  #   assert (ep.estimated_median_household_income_in_year(2010) >= 1)
-  # end 
+  def test_estimated_median_income_in_year_returns_integer_for_2010
+    ep = EconomicProfileRepository.new
+    ep.load_data(input)
+    assert_equal 0.057, ep.economic_profiles[0].estimated_median_household_income_in_year(2010)
+  end 
 
   # def test_unknown_year_returns_unknown_data_error
   #   ep = EnconomicProfileRepository.new
@@ -172,4 +168,4 @@
   #   assert_equal EconomicProfile, ep.economic_profile.class
   # end 
 
-# end
+end

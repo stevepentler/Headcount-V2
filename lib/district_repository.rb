@@ -3,6 +3,7 @@ require_relative 'district'
 require_relative 'csv_parser'
 require_relative 'enrollment_repo'
 require_relative 'statewide_testing_repo'
+require_relative 'economic_profile_repository'
 
 class DistrictRepository
 
@@ -17,11 +18,17 @@ class DistrictRepository
     csv_parser = CSVParser.new(csv_paths)
     @parsed_csv = csv_parser.parsed_csv
     @parsed_csv[:enrollment][:kindergarten].each {|parse| unique_district?(parse)}
+    instantiate_other_repos(csv_paths)
+    create_data_enroll_link
+  end
+
+  def instantiate_other_repos(csv_paths)
     @enrollment_repo = EnrollmentRepository.new
     @enrollment_repo.load_data(csv_paths)
     @statewide_test_repo = StatewideTestRepository.new
     @statewide_test_repo.load_data(csv_paths)
-    create_data_enroll_link
+    @economic_profile_repo = EconomicProfileRepository.new
+    @economic_profile_repo.load_data(csv_paths)
   end
 
   def create_data_enroll_link
@@ -30,6 +37,8 @@ class DistrictRepository
       district.enrollment = temp
       temp_test = @statewide_test_repo.find_by_name(district.name)
       district.statewide_test = temp_test
+      temp_test = @economic_profile_repo.find_by_name(district.name)
+      district.economic_profile = temp_test
     end
   end
 

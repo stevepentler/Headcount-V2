@@ -1,4 +1,5 @@
 require_relative "economic_profile_formatter"
+require_relative "economic_profile"
 
 class EconomicProfileRepository
 
@@ -6,14 +7,15 @@ class EconomicProfileRepository
 
   def initialize
     @economic_profiles = []
-    @economic_profile_repository = EconomicProfileFormatter.new
+    @economic_profile_formatter = EconomicProfileFormatter.new
   end
 
   def load_data(parsed_csv)
     if parsed_csv.has_key?(:economic_profile)
       csv_parser = CSVParser.new(parsed_csv)
       parsed_csv = csv_parser.parsed_csv
-      @economic_profile_repository.district_governor(parsed_csv)
+      @economic_profile_formatter.district_governor(parsed_csv)
+      create_economic_profile_testing_objects
     end
   end
 

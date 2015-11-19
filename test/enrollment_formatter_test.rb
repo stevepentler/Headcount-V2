@@ -31,14 +31,6 @@ class EnrollmentFormatterTest < Minitest::Test
   def test_district_yearly_data_returns_enrollment_object
     ef = EnrollmentFormatter.new
     row = {:location => "ACADEMY 20", :timeframe => 2010, :dataformat => "Percent", :data => 0.3915}
-    assert_equal Array, ef.district_yearly_data(:kindergarten, row).class
+    assert_equal Array, ef.district_yearly_data(:economic_profile, row).class
   end
-  
-  # def test_pairs_name_and_pair_for_repeat_district_name
-  #   ef = EnrollmentFormatter.new
-  #   object = {:kindergarten_data => {:timeframe => {2009 => 0.1}}}
-  #   row = {:timeframe => {2010 => 0.391}}
-  #   hash_mod = {2009=>0.1, 2010=>0.391}
-  #   assert_equal hash_mod, ef.merge_enroll_data(object, :kindergarten_data, row)
-  # end
 end

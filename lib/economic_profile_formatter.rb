@@ -3,7 +3,7 @@ require 'pry'
 
 class EconomicProfileFormatter
 
-  attr_reader :economic_profile_formatter
+  attr_reader :economic_profiles_hash
 
   def initialize
     @economic_profiles_hash = []
@@ -21,7 +21,6 @@ class EconomicProfileFormatter
         end
       end
     end
-    binding.pry
   end
 
   def initial_row_rejection(row, category)
@@ -70,6 +69,7 @@ class EconomicProfileFormatter
   end
 
   def merge_test_data(economic_profile, category, row)
+
     if economic_profile.has_key?(category)
       merge_sub_data(economic_profile, category, row)
     else
