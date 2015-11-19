@@ -53,7 +53,7 @@ class StatewideTestingAnalysis
     array.select do |year|
       year[1][testing_categories[:subject]] != 0.0
     end
-  end 
+  end
 
   def find_growth_for_subjects(testing_categories, state_test)
     array = state_test.proficient_by_grade(testing_categories[:grade]).to_a

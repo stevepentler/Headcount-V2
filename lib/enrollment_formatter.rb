@@ -12,7 +12,7 @@ class EnrollmentFormatter
   def district_governor(enrollments_csv)
     enrollments_csv[:enrollment].each do |category, enrollment_rows|
       category = format_category(category)
-  
+
       enrollment_rows.each do |row|
         if @enrollments_hash.empty?
           district_yearly_data(category, row)
@@ -55,7 +55,7 @@ class EnrollmentFormatter
   def format_category(category)
     category = :kindergarten_participation if category == :kindergarten
     category
-  end 
+  end
 
 
 end

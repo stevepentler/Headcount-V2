@@ -1,3 +1,5 @@
+require "minitest"
+require "minitest/autorun"
 require_relative 'test_helper'
 
 class TestDistrictRepository < TestHarness

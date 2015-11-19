@@ -1,4 +1,4 @@
-class District 
+class District
   attr_reader :name
   attr_accessor :enrollment, :statewide_test
 

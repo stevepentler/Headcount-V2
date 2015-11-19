@@ -53,7 +53,6 @@ class StatewideTestTest < Minitest::Test
     assert_equal expected_hash, st.statewide_tests[0].proficient_by_race_or_ethnicity(:asian)[2011]
   end 
 
-
   def test_for_subject_by_grade_in_year_with_invalid_subject_returns_error
     st = StatewideTestRepository.new
     st.load_data(input)
@@ -139,5 +138,4 @@ class StatewideTestTest < Minitest::Test
     assert_equal 0.515, st.statewide_tests[0].proficient_for_subject_by_race_in_year(:reading, :black, 2012)
     assert_equal 0.663, st.statewide_tests[0].proficient_for_subject_by_race_in_year(:writing, :white, 2011)
   end 
-
 end 
