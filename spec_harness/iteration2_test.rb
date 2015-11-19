@@ -1,13 +1,12 @@
 require "minitest"
 require "minitest/autorun"
-require_relative "../lib/district_repository"
-require_relative "../lib/district"
-require_relative "../lib/enrollment"
-require_relative "../lib/headcount_analyst"
-require_relative "../lib/statewide_test"
+require_relative "../../headcount/lib/district_repository"
+require_relative "../../headcount/lib/district"
+require_relative "../../headcount/lib/enrollment"
+require_relative "../../headcount/lib/headcount_analyst"
+require_relative "../../headcount/lib/statewide_test"
 
 class IterationTwoTest < Minitest::Test
-  
   def test_statewide_testing_repository_basics
     str = statewide_repo
     assert str.find_by_name("ACADEMY 20")
