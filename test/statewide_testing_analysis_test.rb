@@ -60,12 +60,12 @@ class StatewideTestingAnalysisTest < MiniTest::Test
 
   def test_find_single_leader
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.004], st.top_statewide_testing(grade: 3, subject: :math)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.0043333333333333375], st.top_statewide_testing(grade: 3, subject: :math)
   end
 
   def test_find_single_leader_different_grade_and_subject
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.014], st.top_statewide_testing(grade: 8, subject: :writing)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.01416666666666666], st.top_statewide_testing(grade: 8, subject: :writing)
   end
 
   def test_across_all_subjects_returns_array
