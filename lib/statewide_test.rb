@@ -32,8 +32,12 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_race_in_year(subject_, race, year)
-    fail UnknownDataError, 'Unknown grade requested' unless statewide_test_data[race][year][subject_] != nil
+    fail UnknownDataError, 'Unknown grade requested' unless race_and_year_exist(subject_, race, year)
       statewide_test_data[race][year][subject_]
+  end
+
+  def race_and_year_exist(subject_, race, year)
+    statewide_test_data[race] && statewide_test_data[race][year][subject_] != nil
   end
 
 end
