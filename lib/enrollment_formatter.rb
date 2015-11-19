@@ -43,7 +43,6 @@ class EnrollmentFormatter
     @enrollments_hash << {:name => row[:location], category => (yearly_data(row))}
   end
 
-
   def merge_enroll_data(enrollment, category, row)
     if enrollment.has_key?(category)
       enrollment[category].merge!(yearly_data(row))
