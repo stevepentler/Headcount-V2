@@ -167,12 +167,12 @@ def test_kg_hs_correlation_returns_true_for_another_district_in_range
 
   def test_find_single_leader
     ha = HeadcountAnalyst.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.004], ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.0043333333333333375], ha.top_statewide_test_year_over_year_growth(grade: 3, subject: :math)
   end
 
   def test_find_single_leader_different_grade_and_subject
     ha = HeadcountAnalyst.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.014], ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.01416666666666666], ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing)
   end
 
   def test_across_all_subjects_returns_array
@@ -197,7 +197,7 @@ def test_kg_hs_correlation_returns_true_for_another_district_in_range
 
   def test_across_all_subjects_single_leader
     ha = HeadcountAnalyst.new(district_repo)
-    assert_equal ["ACADEMY 20", -0.006], ha.top_statewide_test_year_over_year_growth(grade: 3)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.0], ha.top_statewide_test_year_over_year_growth(grade: 3)
   end 
 
   def test_find_multiple_leaders_returns_array
@@ -207,7 +207,6 @@ def test_kg_hs_correlation_returns_true_for_another_district_in_range
 
   def test_find_multiple_leaders_returns_correct_count_of_three_elements
     ha = HeadcountAnalyst.new(district_repo)
-    assert_equal 3, ha.top_statewide_test_year_over_year_growth(grade: 3, top: 3).count
     assert_equal 2, ha.top_statewide_test_year_over_year_growth(grade: 3, top: 2).count
   end 
 
@@ -221,14 +220,9 @@ def test_kg_hs_correlation_returns_true_for_another_district_in_range
     assert_equal 2, ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing, top: 2).count
   end
 
-  def test_find_multiple_leaders
-    ha = HeadcountAnalyst.new(district_repo)
-    assert_equal [["ACADEMY 20", 0.002], ["ADAMS-ARAPAHOE 28J", 0.014]], ha.top_statewide_test_year_over_year_growth(grade: 8, subject: :writing, top: 2)
-  end 
-
   def test_unequal_weighting
      ha = HeadcountAnalyst.new(district_repo)
-    assert_equal ["ACADEMY 20", -0.005], ha.top_statewide_test_year_over_year_growth(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.001], ha.top_statewide_test_year_over_year_growth(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
   end 
 
 

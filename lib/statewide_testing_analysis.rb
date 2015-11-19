@@ -12,7 +12,7 @@ class StatewideTestingAnalysis
   def top_statewide_testing(testing_categories)
     input_error?(testing_categories)
     all_district_growths = district_subject_growths(testing_categories)
-    top_districts(testing_categories, all_district_growths)
+    (top_districts(testing_categories, all_district_growths)).last
   end
 
   def district_subject_growths(testing_categories)
@@ -36,7 +36,7 @@ class StatewideTestingAnalysis
     if testing_categories.has_key?(:top)
       amount = (testing_categories[:top]) * -1
     end
-    (all_district_growths.sort_by {|district| district[1]})[amount]
+    (all_district_growths.sort_by {|district| district[1]})[(amount..-1)]
   end
 
   def district_growths_across_subjects(testing_categories, state_test)

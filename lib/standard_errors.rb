@@ -1,5 +1,5 @@
 class InsufficientInformationError  < StandardError
-end 
+end
 
 class UnknownDataError < StandardError
-end 
+end

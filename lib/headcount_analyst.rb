@@ -36,5 +36,5 @@ class HeadcountAnalyst
 
   def top_statewide_test_year_over_year_growth(testing_categories)
     statewide_testing_analysis.top_statewide_testing(testing_categories)
-  end 
+  end
 end

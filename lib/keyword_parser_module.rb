@@ -13,4 +13,4 @@ module KeywordParser
 
   def self.test_parser(information)
   end
-end 
+end

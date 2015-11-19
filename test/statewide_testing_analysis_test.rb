@@ -60,12 +60,12 @@ class StatewideTestingAnalysisTest < MiniTest::Test
 
   def test_find_single_leader
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.004], st.top_statewide_testing(grade: 3, subject: :math)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.0043333333333333375], st.top_statewide_testing(grade: 3, subject: :math)
   end
 
   def test_find_single_leader_different_grade_and_subject
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ADAMS-ARAPAHOE 28J", 0.014], st.top_statewide_testing(grade: 8, subject: :writing)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.01416666666666666], st.top_statewide_testing(grade: 8, subject: :writing)
   end
 
   def test_across_all_subjects_returns_array
@@ -90,7 +90,7 @@ class StatewideTestingAnalysisTest < MiniTest::Test
 
   def test_across_all_subjects_single_leader
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ACADEMY 20", -0.006], st.top_statewide_testing(grade: 3)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.0], st.top_statewide_testing(grade: 3)
   end 
 
   def test_find_multiple_leaders_returns_array
@@ -100,7 +100,6 @@ class StatewideTestingAnalysisTest < MiniTest::Test
 
   def test_find_multiple_leaders_returns_correct_count_of_three_elements
     st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal 3, st.top_statewide_testing(grade: 3, top: 3).count
     assert_equal 2, st.top_statewide_testing(grade: 3, top: 2).count
   end 
 
@@ -114,14 +113,9 @@ class StatewideTestingAnalysisTest < MiniTest::Test
     assert_equal 2, st.top_statewide_testing(grade: 8, subject: :writing, top: 2).count
   end
 
-  def test_find_multiple_leaders
-    st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal [["ACADEMY 20", 0.002], ["ADAMS-ARAPAHOE 28J", 0.014]], st.top_statewide_testing(grade: 8, subject: :writing, top: 2)
-  end 
-
   def test_unequal_weighting
      st = StatewideTestingAnalysis.new(district_repo)
-    assert_equal ["ACADEMY 20", -0.005], st.top_statewide_testing(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.001], st.top_statewide_testing(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
   end 
 
 
