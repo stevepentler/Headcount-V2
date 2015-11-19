@@ -47,6 +47,5 @@ class EnrollmentFormatter
     category = :kindergarten_participation if category == :kindergarten
     category
   end
-
-
+  
 end

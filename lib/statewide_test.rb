@@ -13,19 +13,13 @@ class StatewideTest
   end
 
   def proficient_by_grade(grade)
-    if grade == 3 || grade == 8
+    fail UnknownDataError, 'Unknown grade requested' unless grade == 3 || grade == 8
       statewide_test_data[grade]
-    else
-      raise UnknownDataError.new
-    end
   end
 
   def proficient_by_race_or_ethnicity(race)
-    if statewide_test_data.has_key?(race)
+    fail UnknownDataError, 'Unknown grade requested' unless statewide_test_data.has_key?(race)
       statewide_test_data[race]
-    else
-      raise UnknownDataError.new
-    end
   end
 
   def proficient_for_subject_by_grade_in_year(subject_, grade, year)
@@ -33,13 +27,13 @@ class StatewideTest
     if statewide_test_data[grade][year][subject_] != nil
       statewide_test_data[grade][year][subject_]
     else
-      raise UnknownDataError.new
+      fail UnknownDataError, 'Unknown grade requested'
     end
   end
 
   def proficient_for_subject_by_race_in_year(subject_, race, year)
-    fail UnknownDataError unless statewide_test_data[race][year][subject_]
-    statewide_test_data[race][year][subject_]
+    fail UnknownDataError, 'Unknown grade requested' unless statewide_test_data[race][year][subject_] != nil
+      statewide_test_data[race][year][subject_]
   end
 
 end

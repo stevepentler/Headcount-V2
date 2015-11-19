@@ -117,6 +117,4 @@ class StatewideTestingAnalysisTest < MiniTest::Test
      st = StatewideTestingAnalysis.new(district_repo)
     assert_equal ["ADAMS-ARAPAHOE 28J", 0.001], st.top_statewide_testing(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
   end 
-
-
 end

@@ -3,9 +3,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/economic_profile_repository'
 require './lib/csv_parser'
-require './lib/district_repository'
 
-class EconomicProfileTest < Minitest::Test
+class EconomicRepositoryTest < Minitest::Test
 
   def input
     ld = {
@@ -50,9 +49,4 @@ class EconomicProfileTest < Minitest::Test
     assert_equal nil, er.find_by_name("Turing")
   end
   
-  def test_reaches_to_district_repo_for_link
-    dr = DistrictRepository.new
-    dr.load_data(input)
-    assert dr.districts[0].economic_profile != nil
-  end
 end
