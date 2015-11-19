@@ -67,7 +67,8 @@ class EconomicProfileFormatter
   end
 
   def district_yearly_data(category, row)
-    @economic_profiles_hash << {:name => row[:location], category => yearly_data(category, row)} if (yearly_data(category, row) != nil)
+    @economic_profiles_hash <<
+    {:name => row[:location], category => yearly_data(category, row)} if (yearly_data(category, row) != nil)
   end
 
   def merge_test_data(economic_profile, category, row)

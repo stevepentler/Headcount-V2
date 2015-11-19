@@ -23,12 +23,12 @@ class EconomicProfileRepository
   def create_economic_profile_testing_objects
     @economic_profile_formatter.economic_profiles_hash.each do |profile| ###what do we call on formatter?
       @economic_profiles << EconomicProfile.new(profile)
-    end 
+    end
   end
 
   def find_by_name(name)
     @economic_profiles.find do |profile|
       name.upcase == profile.name.upcase
-    end 
+    end
   end
 end

@@ -71,13 +71,17 @@ class StatewideTestFormatter
   def merge_test_data(statewide_test, category, row)
     sub_category = sub_category_format(category, row)
     if statewide_test.has_key?(sub_category)
-      if statewide_test[sub_category].has_key?(row[:timeframe])
-        statewide_test[sub_category][row[:timeframe]].merge!(yearly_data(category, row)[row[:timeframe]])
-      else
-        statewide_test[sub_category].merge!(yearly_data(category, row))
-      end
+      merge_sub_data(statewide_test, sub_category, category, row)
     else
       statewide_test.merge!({sub_category => yearly_data(category, row)})
+    end
+  end
+
+  def merge_sub_data(statewide_test, sub_category, category, row)
+    if statewide_test[sub_category].has_key?(row[:timeframe])
+      statewide_test[sub_category][row[:timeframe]].merge!(yearly_data(category, row)[row[:timeframe]])
+    else
+      statewide_test[sub_category].merge!(yearly_data(category, row))
     end
   end
 end

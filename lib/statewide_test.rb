@@ -38,11 +38,8 @@ class StatewideTest
   end
 
   def proficient_for_subject_by_race_in_year(subject_, race, year)
-    if statewide_test_data[race][year][subject_] != nil
-      statewide_test_data[race][year][subject_]
-    else
-      raise UnknownDataError.new
-    end
+    fail UnknownDataError unless statewide_test_data[race][year][subject_]
+    statewide_test_data[race][year][subject_]
   end
 
 end
