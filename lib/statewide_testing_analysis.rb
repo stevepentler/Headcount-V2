@@ -12,7 +12,6 @@ class StatewideTestingAnalysis
   def top_statewide_testing(testing_categories)
     input_error?(testing_categories)
     all_district_growths = district_subject_growths(testing_categories)
-    binding.pry
     top_districts(testing_categories, all_district_growths)
   end
 
@@ -22,7 +21,7 @@ class StatewideTestingAnalysis
         [state_test.name, route_by_subject(testing_categories, state_test)]
       end
     end
-    change.compact
+    change
   end
 
   def route_by_subject(testing_categories, state_test)
@@ -46,7 +45,8 @@ class StatewideTestingAnalysis
       find_growth_for_subjects(testing_categories, state_test)
     end
     testing_categories.delete(:subject)
-    truncate(values.compact.inject(:+) / 3)
+    value = truncate(values.compact.inject(:+) / 3)
+    value
   end
 
   def find_growth_for_subjects(testing_categories, state_test)
