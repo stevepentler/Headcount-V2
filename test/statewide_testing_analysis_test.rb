@@ -93,36 +93,35 @@ class StatewideTestingAnalysisTest < MiniTest::Test
     assert_equal ["ADAMS-ARAPAHOE 28J", 0.0], st.top_statewide_testing(grade: 3)
   end 
 
-  # def test_find_multiple_leaders_returns_array
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal Array, st.top_statewide_testing(grade: 3, top: 3).class
-  # end 
+  def test_find_multiple_leaders_returns_array
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal Array, st.top_statewide_testing(grade: 3, top: 3).class
+  end 
 
-  # def test_find_multiple_leaders_returns_correct_count_of_three_elements
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal 3, st.top_statewide_testing(grade: 3, top: 3).count
-  #   assert_equal 2, st.top_statewide_testing(grade: 3, top: 2).count
-  # end 
+  def test_find_multiple_leaders_returns_correct_count_of_three_elements
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 2, st.top_statewide_testing(grade: 3, top: 2).count
+  end 
 
-  # def test_find_multiple_leaders_returns_correct_count_of_two_elements
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal 2, st.top_statewide_testing(grade: 3, top: 2).count
-  # end 
+  def test_find_multiple_leaders_returns_correct_count_of_two_elements
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 2, st.top_statewide_testing(grade: 3, top: 2).count
+  end 
 
-  # def test_find_multiple_leaders_across_subject
-  #   st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal 2, st.top_statewide_testing(grade: 8, subject: :writing, top: 2).count
-  # end
+  def test_find_multiple_leaders_across_subject
+    st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal 2, st.top_statewide_testing(grade: 8, subject: :writing, top: 2).count
+  end
 
   # def test_find_multiple_leaders
   #   st = StatewideTestingAnalysis.new(district_repo)
   #   assert_equal [["ACADEMY 20", 0.002], ["ADAMS-ARAPAHOE 28J", 0.014]], st.top_statewide_testing(grade: 8, subject: :writing, top: 2)
   # end 
 
-  # def test_unequal_weighting
-  #    st = StatewideTestingAnalysis.new(district_repo)
-  #   assert_equal ["ACADEMY 20", -0.005], st.top_statewide_testing(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
-  # end 
+  def test_unequal_weighting
+     st = StatewideTestingAnalysis.new(district_repo)
+    assert_equal ["ADAMS-ARAPAHOE 28J", 0.001], st.top_statewide_testing(grade: 3, :weighting => {:math => 0.5, :reading => 0.5, :writing => 0.0})
+  end 
 
 
 end
