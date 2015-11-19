@@ -12,11 +12,7 @@ class StatewideTestFormatter
   def district_governor(statewide_testing_csv)
     statewide_testing_csv[:statewide_testing].each do |category, test_rows|
       test_rows.each do |row|
-        if @statewide_tests_hash.empty?
-          district_yearly_data(category, row)
-        else
-          unique_test?(category, row)
-        end
+        @statewide_tests_hash.empty? ? district_yearly_data(category, row) : unique_test?(category, row)
       end
     end
   end
